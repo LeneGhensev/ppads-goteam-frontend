@@ -1,0 +1,6 @@
+{
+  "categories": [
+    { "nome": "Ação", "id": "acao" },
+    { "nome": "Tiro", "id": "tiro" }
+  ]
+}
