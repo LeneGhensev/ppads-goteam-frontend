@@ -14,9 +14,11 @@ const Game = (props) => {
     imagem_ilustrativa,
     url_acesso,
     url_video,
-    tag_classificacao,
+    // tag_classificacao,
     categoria,
   } = props.game;
+
+  const tags = ["tag 1", "tag 2", "#dahora"];
 
   return (
     <Styles.ContainerGame>
@@ -29,20 +31,29 @@ const Game = (props) => {
         </Styles.ImagemIlustrativa>
 
         <Styles.ContainerBrowserGameInfo>
-          <h3>{nome}</h3>
-          <p>{descricao}</p>
-          <p>
-            <strong>Categoria:</strong> {categoria.nome}
-          </p>
-          <a href={url_acesso} target="_blank" rel="noreferrer">
+          <Styles.Title>{nome}</Styles.Title>
+
+          <Styles.Description>{descricao}</Styles.Description>
+
+          <Styles.Category>
+            <strong>Categoria:</strong> {categoria?.nome}
+          </Styles.Category>
+
+          <Styles.AccessUrl href={url_acesso} target="_blank" rel="noreferrer">
             <p>Jogue agora!</p>
-          </a>
+          </Styles.AccessUrl>
+
           {url_video && (
-            <a href={url_video} target="_blank" rel="noreferrer">
-              <p>Assista ao vídeo demonstrativo!</p>
-            </a>
+            <Styles.VideoUrl href={url_video} target="_blank" rel="noreferrer">
+              <p>Assista ao vídeo demonstrativo</p>
+            </Styles.VideoUrl>
           )}
-          <p>{tag_classificacao}</p>
+
+          <Styles.Tags>
+            {tags.map((element, index) => (
+              <div key={index}>{element}</div>
+            ))}
+          </Styles.Tags>
         </Styles.ContainerBrowserGameInfo>
 
         <Styles.ContainerButtons>
@@ -54,7 +65,7 @@ const Game = (props) => {
             startIcon={<DeleteIcon />}
             onClick={() => props.deleteGame(id)}
           >
-            Delete
+            Apagar
           </Button>
         </Styles.ContainerButtons>
       </Styles.Card>

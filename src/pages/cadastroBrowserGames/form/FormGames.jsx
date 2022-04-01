@@ -25,8 +25,6 @@ const FormGames = (props) => {
     tag_classificacao: props?.game?.tag_classificacao,
   });
 
-  console.log("values", values);
-
   const handleChangeValues = (values) => {
     setValues((prevValue) => ({
       ...prevValue,
@@ -59,8 +57,6 @@ const FormGames = (props) => {
   };
 
   const handleSubmit = async () => {
-    console.log(values);
-
     if (gameEditing) {
       try {
         console.log(`axios.put(/game/id/${props.game.id}, values)`);
@@ -82,8 +78,12 @@ const FormGames = (props) => {
 
   useEffect(() => {
     const getCategories = async () => {
-      const response = await axios.get("/categorias");
-      setCategories(response.data);
+      try {
+        const response = await axios.get("/categorias");
+        setCategories(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     getCategories();

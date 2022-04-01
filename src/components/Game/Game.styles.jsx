@@ -19,7 +19,6 @@ const StyledCard = styled.article`
 `;
 
 const StyledImagemIlustrativa = styled.div`
-  align-self: center;
   margin-right: 1rem;
   max-width: 180px;
   max-height: 120px;
@@ -29,38 +28,69 @@ const StyledImagemIlustrativa = styled.div`
   }
 `;
 
-const StyledContainerBrowserGameInfo = styled.div`
+const StyledContainerGameInfo = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: 0 1rem;
+  text-align: justify;
+`;
 
-  h3 {
-    margin: 0;
-  }
+const StyledGameTitle = styled.h3`
+  margin: 0;
+`;
+
+const StyledGameDescription = styled.p`
+  padding-top: 0.5rem;
+  margin: 0 0 1rem;
+`;
+
+const StyledGameCategory = styled.p`
+  margin: 0.5rem 0;
+`;
+
+const StyledGameUrl = styled.a`
+  text-decoration: none;
+  color: black;
+  margin: 0.5rem 0;
 
   p {
-    padding-top: 0.5rem;
     margin: 0;
   }
 
-  a {
-    text-decoration: none;
+  :hover {
+    color: blue;
+  }
+`;
+
+const StyledContainerTags = styled.div`
+  display: flex;
+  margin: 1rem 0 0;
+
+  div {
+    background-color: #8ecef3;
+    border-radius: 8px;
+    padding: 0.3rem;
+    margin: 0 0.5rem;
+
+    :first-child {
+      margin-left: 0;
+    }
+
+    :last-child {
+      margin-right: 0;
+    }
   }
 `;
 
 const StyledContainerButtons = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  margin-left: 2rem;
+  margin-left: 1rem;
 
   a {
     text-decoration: none;
-  }
-
-  button:first-child {
-    margin-right: 0.5rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -68,6 +98,12 @@ export default {
   ContainerGame: StyledContainerGame,
   Card: StyledCard,
   ImagemIlustrativa: StyledImagemIlustrativa,
-  ContainerBrowserGameInfo: StyledContainerBrowserGameInfo,
+  Title: StyledGameTitle,
+  Description: StyledGameDescription,
+  Category: StyledGameCategory,
+  AccessUrl: StyledGameUrl,
+  VideoUrl: StyledGameUrl,
+  Tags: StyledContainerTags,
+  ContainerBrowserGameInfo: StyledContainerGameInfo,
   ContainerButtons: StyledContainerButtons,
 };
