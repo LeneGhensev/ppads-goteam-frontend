@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../api/api";
 import { Button } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 import PageTitle from "../../components/pageTitle/PageTitle";
 import Game from "../../components/Game/Game";
@@ -10,13 +11,17 @@ import Styles from "./ListagemGames.styles";
 
 const ListagemGames = () => {
   const [listGames, setListGames] = useState();
-  console.log(process.env.REACT_APP_API_URL);
+  const [isLoading, setIsLoading] = useState(false);
+
   const getAllGames = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get("/games");
       setListGames(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -37,19 +42,27 @@ const ListagemGames = () => {
     <Styles.ContainerListGames>
       <PageTitle>Games</PageTitle>
 
-      <Styles.ContainerAddButton>
-        <Link to="/cadastroGames/novoGame">
-          <Button variant="contained">Novo Game</Button>
-        </Link>
-      </Styles.ContainerAddButton>
-
-      {!listGames ? (
-        <p>Não há Games cadastrados</p>
+      {isLoading ? (
+        <Styles.ContainerCircularProgress>
+          <CircularProgress />
+        </Styles.ContainerCircularProgress>
       ) : (
-        listGames?.map((game) => {
-          console.log(game);
-          return <Game key={game.id} game={game} deleteGame={deleteGame} />;
-        })
+        <div>
+          <Styles.ContainerAddButton>
+            <Link to="/cadastroGames/novoGame">
+              <Button variant="contained">Novo Game</Button>
+            </Link>
+          </Styles.ContainerAddButton>
+
+          {!listGames ? (
+            <p>Não há Games cadastrados.</p>
+          ) : (
+            listGames?.map((game) => {
+              console.log(game);
+              return <Game key={game.id} game={game} deleteGame={deleteGame} />;
+            })
+          )}
+        </div>
       )}
     </Styles.ContainerListGames>
   );
