@@ -9,7 +9,8 @@ const formControlRoot = `.${formControlClasses.root}`;
 const buttonRoot = `.${buttonClasses.root}`;
 
 const StyledContainer = styled.div`
-  padding: 2rem 6rem;
+  padding: 2rem 18rem;
+  border-radius: 8px;
 `;
 
 const StyledForm = styled.form`
@@ -27,16 +28,29 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
+const StyledContainerButtons = styled.div`
+  padding: 4rem 0 0;
+  display: flex;
+  justify-content: center;
+
+  a {
+    text-decoration: none;
+  }
+`;
+
+const StyledContainerImagemIlustrativa = styled.div`
+  padding: 1rem 0 0;
+
+  p {
+    font-size: 14px;
+    margin: 0.5rem 0;
+  }
+`;
+
 const StyledFormControl = styled(FormControl)`
   &${formControlRoot} {
     margin-top: 2rem;
   }
-`;
-
-const StyledContainerButtons = styled.div`
-  padding: 2rem 0 0;
-  display: flex;
-  justify-content: center;
 `;
 
 const StyledButton = styled(Button)`
@@ -56,4 +70,5 @@ export default {
   FormControl: StyledFormControl,
   ContainerButtons: StyledContainerButtons,
   Button: StyledButton,
+  ContainerImagemIlustrativa: StyledContainerImagemIlustrativa,
 };
