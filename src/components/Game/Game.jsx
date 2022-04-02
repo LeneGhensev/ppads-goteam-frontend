@@ -24,10 +24,7 @@ const Game = (props) => {
     <Styles.ContainerGame>
       <Styles.Card>
         <Styles.ImagemIlustrativa>
-          <img
-            src={imagem_ilustrativa}
-            alt="Imagem ilustrativa do BrowserGame"
-          />
+          <img src={imagem_ilustrativa} alt="Imagem ilustrativa do Game" />
         </Styles.ImagemIlustrativa>
 
         <Styles.ContainerBrowserGameInfo>

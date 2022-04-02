@@ -9,7 +9,6 @@ export default function GoodBrowserGamesRoutes() {
   return (
     <Routes>
       <Route path="/" element={<ListagemGames />} />
-      <Route path="/cadastroGames" element={<ListagemGames />} />
       <Route path="/cadastroGames/novoGame" element={<CadastroGame />} />
       <Route path="/cadastroGames/editarGame/:id" element={<CadastroGame />} />
 
