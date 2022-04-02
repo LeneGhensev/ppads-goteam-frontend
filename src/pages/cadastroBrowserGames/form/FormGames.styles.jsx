@@ -26,6 +26,11 @@ const StyledTextField = styled(TextField)`
       margin-top: 0;
     }
   }
+
+  p {
+    color: red;
+    margin-left: 0;
+  }
 `;
 
 const StyledContainerButtons = styled.div`

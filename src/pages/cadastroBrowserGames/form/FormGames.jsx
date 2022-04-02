@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../api/api";
 import { Link, useNavigate } from "react-router-dom";
-
 import { InputLabel, Select, MenuItem } from "@mui/material";
+
+import useValidateForm from "../../../hooks/useValidateForm";
 
 import Styles from "./FormGames.styles";
 import PageTitle from "../../../components/pageTitle/PageTitle";
@@ -10,70 +11,66 @@ import PageTitle from "../../../components/pageTitle/PageTitle";
 const FormGames = (props) => {
   const navigate = useNavigate();
 
+  const [categories, setCategories] = useState();
+
   const title = props?.game ? "Editar Game" : "Novo Game";
   const textButton = props?.game ? "Salvar alterações" : "Gravar novo Game";
   const gameEditing = props?.game ? true : false;
 
-  const [categories, setCategories] = useState();
-  const [values, setValues] = useState({
-    nome: props?.game?.nome,
-    imagem_ilustrativa: props?.game?.imagem_ilustrativa,
-    descricao: props?.game?.descricao,
-    id_categoria: props?.game?.categoria.id,
-    url_acesso: props?.game?.url_acesso,
-    url_video: props?.game?.url_video,
-    tag_classificacao: props?.game?.tag_classificacao,
+  const validateForm = useValidateForm({
+    initialValues: {
+      nome: props?.game?.nome,
+      imagem_ilustrativa: props?.game?.imagem_ilustrativa,
+      descricao: props?.game?.descricao,
+      // id_categoria: props?.game?.categoria.id,
+      categoria: { id: props?.game?.categoria?.id },
+      url_acesso: props?.game?.url_acesso,
+      url_video: props?.game?.url_video,
+      tag_classificacao: props?.game?.tag_classificacao,
+    },
+    validate: function (values) {
+      const errors = {};
+
+      if (values.nome === "") {
+        errors.nome = "Campo obrigatório";
+      }
+
+      if (values.descricao === "") {
+        errors.descricao = "Campo obrigatório";
+      }
+
+      if (values.categoria === "") {
+        errors.categoria = "Campo obrigatório";
+      }
+
+      if (values.url_acesso === "") {
+        errors.url_acesso = "Campo obrigatório";
+      }
+
+      return errors;
+    },
   });
-
-  const handleChangeValues = (values) => {
-    setValues((prevValue) => ({
-      ...prevValue,
-      [values.target.name]: values.target.value,
-    }));
-  };
-
-  const handleImageValues = async (values) => {
-    let document = "";
-    let reader = new FileReader();
-
-    reader.readAsDataURL(values.target.files[0]);
-    reader.onload = function () {
-      document = reader.result;
-
-      console.log(document);
-
-      document: document
-        ? String(document).replace(/^data:(.;base64,)?/, "")
-        : String(this.document).replace(/^data:(.;base64,)?/, "");
-
-      setValues((prevValue) => ({
-        ...prevValue,
-        [values.target.name]: document,
-      }));
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-    };
-  };
 
   const handleSubmit = async () => {
     if (gameEditing) {
       try {
-        console.log(`axios.put(/game/id/${props.game.id}, values)`);
-        await axios.put(`/game/id/${props.game.id}`, values);
+        console.log(`axios.put(/game/id/${props.game.id})`);
+        console.log(validateForm.values);
+        await axios.put(`/game/id/${props.game.id}`, validateForm.values);
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
-        console.log('axios.post("/game", values)');
-        await axios.post("/game", values);
+        console.log('axios.post("/game")');
+        console.log(validateForm.values);
+        await axios.post("/game", validateForm.values);
       } catch (error) {
         console.log(error);
       }
     }
 
-    navigate("/cadastroGames");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -94,24 +91,31 @@ const FormGames = (props) => {
       <PageTitle>{title}</PageTitle>
 
       <Styles.Container>
-        <Styles.Form>
+        <Styles.Form
+          onSubmit={(event) => {
+            event.preventDefault();
+            console.log(validateForm.values);
+          }}
+        >
           <Styles.TextField
             required
             type="text"
             name="nome"
             label="Nome"
-            value={values?.nome}
-            onChange={handleChangeValues}
+            value={validateForm.values?.nome}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
+            helperText={validateForm.touched.nome && validateForm.errors.nome}
             fullWidth
           />
 
-          {values?.imagem_ilustrativa ? (
+          {validateForm.values?.imagem_ilustrativa ? (
             <Styles.ContainerImagemIlustrativa>
               <img
-                src={values?.imagem_ilustrativa}
-                alt="Imagem ilustrativa do BrowserGame"
+                src={validateForm.values?.imagem_ilustrativa}
+                alt="Imagem ilustrativa do Game"
                 name="imagem_ilustrativa"
-                onClick={handleChangeValues}
+                onClick={validateForm.handleChange}
               />
               <p>Clique na imagem para alterar</p>
             </Styles.ContainerImagemIlustrativa>
@@ -120,7 +124,11 @@ const FormGames = (props) => {
               type="file"
               accept="image/*"
               name="imagem_ilustrativa"
-              onChange={handleImageValues}
+              onChange={validateForm.handleImageValues}
+              helperText={
+                validateForm.touched.imagem_ilustrativa &&
+                validateForm.errors.imagem_ilustrativa
+              }
               fullWidth
             />
           )}
@@ -132,20 +140,27 @@ const FormGames = (props) => {
             label="Descrição"
             multiline
             rows={4}
-            value={values?.descricao}
-            onChange={handleChangeValues}
+            value={validateForm.values?.descricao}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
+            helperText={
+              validateForm.touched.descricao && validateForm.errors.descricao
+            }
             fullWidth
           />
           <Styles.FormControl fullWidth sx={{ minWidth: 200 }}>
             <InputLabel id="categoria">Categoria *</InputLabel>
             <Select
               required
-              name="id_categoria"
+              name="categoria"
               labelId="categoria"
-              label="Categoria *"
               id="demo-simple-select-autowidth"
-              value={values?.id_categoria}
-              onChange={handleChangeValues}
+              value={validateForm.values?.categoria.id}
+              onChange={validateForm.handleChange}
+              onBlur={validateForm.handleBlur}
+              helperText={
+                validateForm.touched.categoria && validateForm.errors.categoria
+              }
               defaultValue=""
             >
               {categories?.map(({ id, nome }) => (
@@ -160,29 +175,34 @@ const FormGames = (props) => {
             type="text"
             name="url_acesso"
             label="URL de acesso"
-            value={values?.url_acesso}
-            onChange={handleChangeValues}
+            value={validateForm.values?.url_acesso}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
+            helperText={
+              validateForm.touched.url_acesso && validateForm.errors.url_acesso
+            }
             fullWidth
           />
           <Styles.TextField
-            required
             type="text"
             name="url_video"
             label="URL do vídeo"
-            defaultValue={values?.url_video}
-            onChange={handleChangeValues}
+            value={validateForm.values?.url_video}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
             fullWidth
           />
           <Styles.TextField
             type="text"
             name="tag_classificacao"
             label="Tags de classificação"
-            value={values?.tag_classificacao}
-            onChange={handleChangeValues}
+            value={validateForm.values?.tag_classificacao}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
             fullWidth
           />
           <Styles.ContainerButtons>
-            <Link to="/cadastroGames">
+            <Link to="/">
               <Styles.Button variant="outlined">Cancelar</Styles.Button>
             </Link>
 
