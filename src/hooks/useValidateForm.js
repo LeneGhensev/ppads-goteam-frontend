@@ -12,12 +12,7 @@ const useValidateForm = ({ initialValues, validate }) => {
   function handleChange(event) {
     const fieldName = event.target.name;
     const { value } = event.target;
-    if (fieldName === "categoria") {
-      setValues({
-        ...values,
-        [values.categoria.id]: value,
-      });
-    }
+
     setValues({
       ...values,
       [fieldName]: value,
@@ -27,6 +22,13 @@ const useValidateForm = ({ initialValues, validate }) => {
   const handleImageValues = async (values) => {
     let document = "";
     let reader = new FileReader();
+
+    if (values.target.files[0].size > 100 * 1024) {
+      validateValues(values);
+
+      values.target.value = "";
+      return;
+    }
 
     reader.readAsDataURL(values.target.files[0]);
     reader.onload = function () {
@@ -49,8 +51,6 @@ const useValidateForm = ({ initialValues, validate }) => {
   };
 
   function handleBlur(event) {
-    // const fieldName = event.target.getAttribute("name");
-    // console.log(fieldName);
     setTouchedFields({
       ...touched,
       [event.target.name]: true,

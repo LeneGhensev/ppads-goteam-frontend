@@ -70,7 +70,7 @@ const StyledContainerTags = styled.div`
   div {
     background-color: #8ecef3;
     border-radius: 8px;
-    padding: 0.3rem;
+    padding: 0.5rem 0.8rem;
     margin: 0 0.5rem;
 
     :first-child {

@@ -13,20 +13,28 @@ const FormGames = (props) => {
 
   const [categories, setCategories] = useState();
 
+  const id = props?.game?.id;
   const title = props?.game ? "Editar Game" : "Novo Game";
   const textButton = props?.game ? "Salvar alterações" : "Gravar novo Game";
   const gameEditing = props?.game ? true : false;
+  let tags = "";
+  props?.game?.tags?.map((tag) => {
+    if (tags === "") {
+      tags = tag.nome;
+    } else {
+      tags = tags + ", " + tag.nome;
+    }
+  });
 
   const validateForm = useValidateForm({
     initialValues: {
       nome: props?.game?.nome,
       imagem_ilustrativa: props?.game?.imagem_ilustrativa,
       descricao: props?.game?.descricao,
-      // id_categoria: props?.game?.categoria.id,
-      categoria: { id: props?.game?.categoria?.id },
+      id_categoria: props?.game?.categoria.id,
       url_acesso: props?.game?.url_acesso,
       url_video: props?.game?.url_video,
-      tag_classificacao: props?.game?.tag_classificacao,
+      tags: tags,
     },
     validate: function (values) {
       const errors = {};
@@ -40,11 +48,18 @@ const FormGames = (props) => {
       }
 
       if (values.categoria === "") {
-        errors.categoria = "Campo obrigatório";
+        errors.id_categoria = "Campo obrigatório";
       }
 
       if (values.url_acesso === "") {
         errors.url_acesso = "Campo obrigatório";
+      }
+
+      if (values.imagem_ilustrativa === "") {
+        errors.imagem_ilustrativa = "Campo obrigatório";
+      }
+      if (values.target?.files[0]?.size > 100 * 1024) {
+        errors.imagem_ilustrativa = "Tamanho máximo 100KB";
       }
 
       return errors;
@@ -52,19 +67,24 @@ const FormGames = (props) => {
   });
 
   const handleSubmit = async () => {
+    const { tags: tagToSplit } = validateForm.values;
+    const tags = tagToSplit?.split(",").map((tag) => tag.trim());
+
+    const values = { ...validateForm.values, tags };
+    console.log(values);
+
     if (gameEditing) {
       try {
-        console.log(`axios.put(/game/id/${props.game.id})`);
-        console.log(validateForm.values);
-        await axios.put(`/game/id/${props.game.id}`, validateForm.values);
+        console.log(`axios.put(/game/id/${id})`);
+        await axios.put(`/game/id/${id}`, values);
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
         console.log('axios.post("/game")');
-        console.log(validateForm.values);
-        await axios.post("/game", validateForm.values);
+        console.log(values);
+        await axios.post("/game", values);
       } catch (error) {
         console.log(error);
       }
@@ -92,9 +112,10 @@ const FormGames = (props) => {
 
       <Styles.Container>
         <Styles.Form
+          enctype="multipart/form-data"
           onSubmit={(event) => {
             event.preventDefault();
-            console.log(validateForm.values);
+            handleSubmit();
           }}
         >
           <Styles.TextField
@@ -120,17 +141,23 @@ const FormGames = (props) => {
               <p>Clique na imagem para alterar</p>
             </Styles.ContainerImagemIlustrativa>
           ) : (
-            <Styles.TextField
-              type="file"
-              accept="image/*"
-              name="imagem_ilustrativa"
-              onChange={validateForm.handleImageValues}
-              helperText={
-                validateForm.touched.imagem_ilustrativa &&
-                validateForm.errors.imagem_ilustrativa
-              }
-              fullWidth
-            />
+            <div>
+              <Styles.TextField
+                type="file"
+                accept="image/*"
+                name="imagem_ilustrativa"
+                onChange={validateForm.handleImageValues}
+                // helperText={
+                //   validateForm.touched.imagem_ilustrativa &&
+                //   validateForm.errors.imagem_ilustrativa
+                // }
+                fullWidth
+              />
+              {validateForm.touched.imagem_ilustrativa &&
+                validateForm.errors.imagem_ilustrativa && (
+                  <span>{validateForm.errors.imagem_ilustrativa}</span>
+                )}
+            </div>
           )}
 
           <Styles.TextField
@@ -148,18 +175,22 @@ const FormGames = (props) => {
             }
             fullWidth
           />
+
           <Styles.FormControl fullWidth sx={{ minWidth: 200 }}>
-            <InputLabel id="categoria">Categoria *</InputLabel>
+            <InputLabel id="categoria" sx={{ backgroundColor: "white" }}>
+              Categoria *
+            </InputLabel>
             <Select
               required
-              name="categoria"
+              name="id_categoria"
               labelId="categoria"
               id="demo-simple-select-autowidth"
-              value={validateForm.values?.categoria.id}
+              value={validateForm.values?.id_categoria}
               onChange={validateForm.handleChange}
               onBlur={validateForm.handleBlur}
               helperText={
-                validateForm.touched.categoria && validateForm.errors.categoria
+                validateForm.touched.id_categoria &&
+                validateForm.errors.id_categoria
               }
               defaultValue=""
             >
@@ -170,6 +201,7 @@ const FormGames = (props) => {
               ))}
             </Select>
           </Styles.FormControl>
+
           <Styles.TextField
             required
             type="text"
@@ -183,6 +215,7 @@ const FormGames = (props) => {
             }
             fullWidth
           />
+
           <Styles.TextField
             type="text"
             name="url_video"
@@ -192,21 +225,23 @@ const FormGames = (props) => {
             onBlur={validateForm.handleBlur}
             fullWidth
           />
+
           <Styles.TextField
             type="text"
-            name="tag_classificacao"
+            name="tags"
             label="Tags de classificação"
-            value={validateForm.values?.tag_classificacao}
+            value={validateForm.values?.tags}
             onChange={validateForm.handleChange}
             onBlur={validateForm.handleBlur}
             fullWidth
           />
+
           <Styles.ContainerButtons>
             <Link to="/">
               <Styles.Button variant="outlined">Cancelar</Styles.Button>
             </Link>
 
-            <Styles.Button variant="contained" onClick={handleSubmit}>
+            <Styles.Button type="submit" variant="contained">
               {textButton}
             </Styles.Button>
           </Styles.ContainerButtons>

@@ -14,11 +14,9 @@ const Game = (props) => {
     imagem_ilustrativa,
     url_acesso,
     url_video,
-    // tag_classificacao,
+    tags,
     categoria,
   } = props.game;
-
-  const tags = ["tag 1", "tag 2", "#dahora"];
 
   return (
     <Styles.ContainerGame>
@@ -47,8 +45,8 @@ const Game = (props) => {
           )}
 
           <Styles.Tags>
-            {tags.map((element, index) => (
-              <div key={index}>{element}</div>
+            {tags?.map((element, index) => (
+              <div key={index}>{element.nome}</div>
             ))}
           </Styles.Tags>
         </Styles.ContainerBrowserGameInfo>
