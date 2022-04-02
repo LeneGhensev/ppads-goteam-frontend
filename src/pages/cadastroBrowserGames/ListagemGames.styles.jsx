@@ -6,6 +6,12 @@ const StyledContainerListGames = styled.div`
   padding-bottom: 2rem;
 `;
 
+const StyledContainerGamesEmpty = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+`;
+
 const StyledContainerCircularProgress = styled.div`
   display: flex;
   justify-content: center;
@@ -32,6 +38,7 @@ const StyledContainerAddButton = styled.div`
 
 export default {
   ContainerListGames: StyledContainerListGames,
+  ContainerGamesEmpty: StyledContainerGamesEmpty,
   ContainerCircularProgress: StyledContainerCircularProgress,
   ContainerAddButton: StyledContainerAddButton,
 };

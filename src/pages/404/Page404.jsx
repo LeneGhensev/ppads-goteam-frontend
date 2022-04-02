@@ -4,9 +4,9 @@ import Styles from "./404.styles";
 
 const Page404 = () => {
   return (
-    <main className="container flex flex--centro flex--coluna">
+    <Styles.ContainerText>
       <Styles.Text>Ops, Essa página não existe!</Styles.Text>
-    </main>
+    </Styles.ContainerText>
   );
 };
 

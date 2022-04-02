@@ -34,8 +34,6 @@ const useValidateForm = ({ initialValues, validate }) => {
     reader.onload = function () {
       document = reader.result;
 
-      console.log(document);
-
       document: document
         ? String(document).replace(/^data:(.;base64,)?/, "")
         : String(this.document).replace(/^data:(.;base64,)?/, "");

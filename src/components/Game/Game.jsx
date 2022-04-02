@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import defaultImage from "../../assets/images/image.png";
 
 import Styles from "./Game.styles";
 
@@ -22,7 +23,11 @@ const Game = (props) => {
     <Styles.ContainerGame>
       <Styles.Card>
         <Styles.ImagemIlustrativa>
-          <img src={imagem_ilustrativa} alt="Imagem ilustrativa do Game" />
+          {imagem_ilustrativa ? (
+            <img src={imagem_ilustrativa} alt="Imagem ilustrativa do Game" />
+          ) : (
+            <img src={defaultImage} alt="Imagem ilustrativa do Game" />
+          )}
         </Styles.ImagemIlustrativa>
 
         <Styles.ContainerBrowserGameInfo>
