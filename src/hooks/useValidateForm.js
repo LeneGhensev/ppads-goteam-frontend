@@ -13,10 +13,18 @@ const useValidateForm = ({ initialValues, validate }) => {
     const fieldName = event.target.name;
     const { value } = event.target;
 
-    setValues({
-      ...values,
-      [fieldName]: value,
-    });
+    if (fieldName === "imagem_ilustrativa") {
+      console.log(event.target.files[0]);
+      setValues({
+        ...values,
+        [fieldName]: event.target.files[0],
+      });
+    } else {
+      setValues({
+        ...values,
+        [fieldName]: value,
+      });
+    }
   }
 
   const handleImageValues = async (values) => {

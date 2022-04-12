@@ -64,25 +64,89 @@ const FormGames = (props) => {
     },
   });
 
-  const handleSubmit = async () => {
-    const { tags: tagToSplit } = validateForm.values;
+  // const transformValuesToFormData = (valuesToTransform) => {
+  //   const data = new FormData();
+
+  //   const { tags: tagToSplit } = valuesToTransform;
+  //   const tags = tagToSplit?.split(",").map((tag) => tag.trim());
+
+  //   Object.keys(valuesToTransform).forEach((value) => {
+  //     console.log(value, valuesToTransform[value]);
+  //     data.append(`${value}`, value);
+  //   });
+  //   data.append("tags", tags);
+
+  //   return data;
+  // };
+
+  const transformValuesToFormData = (valuesToTransform) => {
+    const data = new FormData();
+
+    const {
+      nome,
+      imagem_ilustrativa,
+      descricao,
+      id_categoria,
+      url_acesso,
+      url_video,
+      tags: tagToSplit,
+    } = valuesToTransform;
+
     const tags = tagToSplit?.split(",").map((tag) => tag.trim());
 
-    const values = { ...validateForm.values, tags };
-    console.log(values);
+    data.append("nome", nome);
+    data.append("imagem_ilustrativa", imagem_ilustrativa);
+    data.append("descricao", descricao);
+    data.append("id_categoria", id_categoria);
+    data.append("url_acesso", url_acesso);
+    data.append("url_video", url_video);
+    data.append("tags", tags);
+
+    console.log(data);
+    return data;
+  };
+
+  const transformImagemToFormData = (imagemToTransform) => {
+    let formData = new FormData();
+    formData.append("imagem_ilustrativa", imagemToTransform);
+    return formData;
+  };
+
+  const handleSubmit = async () => {
+    // const {
+    //   tags: tagToSplit,
+    //   // imagem_ilustrativa: imagem,
+    // } = validateForm.values;
+
+    // const tags = tagToSplit?.split(",").map((tag) => tag.trim());
+    // const { imagem_ilustrativa } = transformImagemToFormData(imagem);
+    const { data } = transformValuesToFormData(validateForm.values);
+
+    // const data = { ...validateForm.values, tags };
+    console.log(data);
 
     if (gameEditing) {
       try {
         console.log(`axios.put(/game/id/${id})`);
-        await axios.put(`/game/id/${id}`, values);
+        console.log(data);
+        await axios.put(`/game/id/${id}`, data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
         console.log('axios.post("/game")');
-        console.log(values);
-        await axios.post("/game", values);
+        console.log(data);
+        await axios.post("/game", data, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            // "Content-Type": "application/json",
+          },
+        });
       } catch (error) {
         console.log(error);
       }
@@ -143,7 +207,7 @@ const FormGames = (props) => {
               type="file"
               accept="image/*"
               name="imagem_ilustrativa"
-              onChange={validateForm.handleImageValues}
+              onChange={validateForm.handleChange}
               // helperText={
               //   validateForm.touched.imagem_ilustrativa &&
               //   validateForm.errors.imagem_ilustrativa
