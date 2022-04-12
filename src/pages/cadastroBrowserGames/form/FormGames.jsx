@@ -18,6 +18,15 @@ const FormGames = (props) => {
   const textButton = props?.game ? "Salvar alterações" : "Gravar novo Game";
   const gameEditing = props?.game ? true : false;
 
+  let tags = "";
+  props?.game?.tags?.map((tag) => {
+    if (tags === "") {
+      tags = tag.nome;
+    } else {
+      tags = tags + ", " + tag.nome;
+    }
+  });
+
   const validateForm = useValidateForm({
     initialValues: {
       nome: props?.game?.nome,
@@ -26,6 +35,7 @@ const FormGames = (props) => {
       id_categoria: props?.game?.categoria.id,
       url_acesso: props?.game?.url_acesso,
       url_video: props?.game?.url_video,
+      tags: tags,
     },
     validate: function (values) {
       const errors = {};
@@ -59,15 +69,19 @@ const FormGames = (props) => {
     const tags = tagToSplit?.split(",").map((tag) => tag.trim());
 
     const values = { ...validateForm.values, tags };
+    console.log(values);
 
     if (gameEditing) {
       try {
+        console.log(`axios.put(/game/id/${id})`);
         await axios.put(`/game/id/${id}`, values);
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
+        console.log('axios.post("/game")');
+        console.log(values);
         await axios.post("/game", values);
       } catch (error) {
         console.log(error);
@@ -130,8 +144,16 @@ const FormGames = (props) => {
               accept="image/*"
               name="imagem_ilustrativa"
               onChange={validateForm.handleImageValues}
+              // helperText={
+              //   validateForm.touched.imagem_ilustrativa &&
+              //   validateForm.errors.imagem_ilustrativa
+              // }
               fullWidth
             />
+            // {validateForm.touched.imagem_ilustrativa &&
+            //   validateForm.errors.imagem_ilustrativa && (
+            //     <span>{validateForm.errors.imagem_ilustrativa}</span>
+            //   )}
           )}
 
           <Styles.TextField
@@ -195,6 +217,16 @@ const FormGames = (props) => {
             name="url_video"
             label="URL do vídeo"
             value={validateForm.values?.url_video}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
+            fullWidth
+          />
+
+          <Styles.TextField
+            type="text"
+            name="tags"
+            label="Tags de classificação"
+            value={validateForm.values?.tags}
             onChange={validateForm.handleChange}
             onBlur={validateForm.handleBlur}
             fullWidth
