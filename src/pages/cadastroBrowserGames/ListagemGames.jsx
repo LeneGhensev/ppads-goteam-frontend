@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 import PageTitle from "../../components/pageTitle/PageTitle";
-import Game from "../../components/Game/Game";
+import Game from "../../components/game/Game";
 
 import Styles from "./ListagemGames.styles";
 
