@@ -14,7 +14,6 @@ const CadastroCategoria = (props) => {
   const [showFormCadastro, setShowFormCadastro] = useState(false);
 
   const edicaoCategoria = id ? true : false;
-  console.log(edicaoCategoria);
   const titulo = id ? "Editar Categoria" : "Nova Categoria";
   const textoBotaoConfirmar = id
     ? "Salvar alterações"
@@ -84,7 +83,6 @@ const CadastroCategoria = (props) => {
 
               <form
                 onSubmit={(event) => {
-                  console.log("form submetido");
                   event.preventDefault();
                   handleSubmit();
                 }}
