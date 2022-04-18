@@ -6,10 +6,13 @@ import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 import PageTitle from "../../components/pageTitle/PageTitle";
 import Game from "../../components/game/Game";
+import Select from "../../components/select/Select";
+import TextField from "../../components/textfield/TextField";
 
 import Styles from "./ListagemGames.styles";
 
 const ListagemGames = () => {
+  const [categories, setCategories] = useState();
   const [listGames, setListGames] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,7 +37,21 @@ const ListagemGames = () => {
     }
   };
 
+  const getCategories = async () => {
+    try {
+      const response = await axios.get("/categorias");
+      setCategories(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filtrarGames = () => {
+    console.log("filtrarGames");
+  };
+
   useEffect(() => {
+    getCategories();
     getAllGames();
   }, []);
 
@@ -48,6 +65,32 @@ const ListagemGames = () => {
         </Styles.ContainerCircularProgress>
       ) : (
         <div>
+          <Styles.ContainerFiltro>
+            <TextField
+              type="text"
+              name="nome"
+              label="Nome"
+              value=""
+              onChange={() => console.log("onChange TextField")}
+            />
+
+            <Select
+              id="categoria"
+              name="id_categoria"
+              label="Categoria"
+              labelId="categoria"
+              value=""
+              onChange={() => console.log("onChange Select")}
+              sx={{ minWidth: 400 }}
+            >
+              {categories}
+            </Select>
+
+            <Button variant="contained" onClick={filtrarGames}>
+              Pesquisar
+            </Button>
+          </Styles.ContainerFiltro>
+
           <Styles.ContainerAddButton>
             <Link to="/cadastroGames/novoGame">
               <Button variant="contained">Novo Game</Button>
