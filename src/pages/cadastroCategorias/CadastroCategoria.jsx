@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, CircularProgress, TextField } from "@mui/material";
 
 import axios from "../../api/api";
+import Styles from "./CadastroCategoria.styles";
 
 const CadastroCategoria = (props) => {
   const { id } = useParams();
@@ -70,54 +71,48 @@ const CadastroCategoria = (props) => {
   }, [id]);
 
   return (
-    <div>
-      {isLoading ? (
-        // <Styles.ContainerCircularProgress>
-        <CircularProgress />
-      ) : (
-        // </Styles.ContainerCircularProgress>
-        <div>
-          {(showFormCadastro || !props.inicioListagemCategorias) && (
-            <div>
-              <p>{titulo}</p>
+    <Styles.ContainerCadastroCategoria>
+      <div>
+        {(showFormCadastro || !props.inicioListagemCategorias) && (
+          <div>
+            <p>{titulo}</p>
 
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  handleSubmit();
-                }}
-              >
-                <TextField
-                  //   required
-                  type="text"
-                  name="categoria"
-                  label="Nome"
-                  value={categoria || ""}
-                  onChange={handleChange}
-                  //   onChange={validateForm.handleChange}
-                  //   onBlur={validateForm.handleBlur}
-                  //   helperText={validateForm.touched.nome && validateForm.errors.nome}
-                  //   fullWidth
-                />
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleSubmit();
+              }}
+            >
+              <TextField
+                //   required
+                type="text"
+                name="categoria"
+                label="Nome"
+                value={categoria || ""}
+                onChange={handleChange}
+                //   onChange={validateForm.handleChange}
+                //   onBlur={validateForm.handleBlur}
+                //   helperText={validateForm.touched.nome && validateForm.errors.nome}
+                //   fullWidth
+              />
 
-                <Link to="/cadastroCategorias">
-                  <Button
-                    variant="outlined"
-                    onClick={handleCloseCadastroCategoria}
-                  >
-                    Cancelar
-                  </Button>
-                </Link>
-
-                <Button type="submit" variant="contained">
-                  {textoBotaoConfirmar}
+              <Link to="/cadastroCategorias">
+                <Button
+                  variant="outlined"
+                  onClick={handleCloseCadastroCategoria}
+                >
+                  Cancelar
                 </Button>
-              </form>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+              </Link>
+
+              <Button type="submit" variant="contained">
+                {textoBotaoConfirmar}
+              </Button>
+            </form>
+          </div>
+        )}
+      </div>
+    </Styles.ContainerCadastroCategoria>
   );
 };
 

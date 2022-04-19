@@ -8,6 +8,7 @@ const StyledContainerCategoria = styled.div`
 
 const StyledCard = styled.article`
   display: flex;
+  justify-content: space-between;
   border-radius: 8px;
   width: 100vw;
   padding: 1rem;
@@ -24,12 +25,15 @@ const StyledTituloCategoria = styled.h3`
 
 const StyledContainerBotoes = styled.div`
   display: flex;
-  flex-direction: column;
   margin-left: 1rem;
 
   a {
     text-decoration: none;
-    margin-bottom: 1rem;
+    margin-right: 1rem;
+  }
+
+  button:first-child {
+    color: #ff7300;
   }
 `;
 
