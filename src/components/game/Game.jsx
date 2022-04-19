@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import defaultImage from "../../assets/images/image.png";
+import defaultImage from "../../assets/images/urso.png";
 
 import Styles from "./Game.styles";
 

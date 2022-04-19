@@ -137,11 +137,10 @@ const ListagemGames = () => {
           </Styles.ContainerAddButton>
 
           {!listGames ? (
-            <Styles.ContainerGamesEmpty>
-              <p>Não há Games cadastrados.</p>
-            </Styles.ContainerGamesEmpty>
+            <p>Não há Games cadastrados.</p>
           ) : (
             listGames?.map((game) => {
+              console.log(game);
               return <Game key={game.id} game={game} deleteGame={deleteGame} />;
             })
           )}

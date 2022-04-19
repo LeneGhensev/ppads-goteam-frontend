@@ -19,6 +19,15 @@ const FormGames = (props) => {
   const textButton = props?.game ? "Salvar alterações" : "Gravar novo Game";
   const gameEditing = props?.game ? true : false;
 
+  let tags = "";
+  props?.game?.tags?.map((tag) => {
+    if (tags === "") {
+      tags = tag.nome;
+    } else {
+      tags = tags + ", " + tag.nome;
+    }
+  });
+
   const validateForm = useValidateForm({
     initialValues: {
       nome: props?.game?.nome,
@@ -27,6 +36,7 @@ const FormGames = (props) => {
       id_categoria: props?.game?.categoria.id,
       url_acesso: props?.game?.url_acesso,
       url_video: props?.game?.url_video,
+      tags: tags,
     },
     validate: function (values) {
       const errors = {};
@@ -97,7 +107,6 @@ const FormGames = (props) => {
 
       <Styles.Container>
         <Styles.Form
-          enctype="multipart/form-data"
           onSubmit={(event) => {
             event.preventDefault();
             handleSubmit();
@@ -115,25 +124,15 @@ const FormGames = (props) => {
             fullWidth
           />
 
-          {validateForm.values?.imagem_ilustrativa ? (
-            <Styles.ContainerImagemIlustrativa>
-              <img
-                src={validateForm.values?.imagem_ilustrativa}
-                alt="Imagem ilustrativa do Game"
-                name="imagem_ilustrativa"
-                onClick={validateForm.handleChange}
-              />
-              <p>Clique na imagem para alterar</p>
-            </Styles.ContainerImagemIlustrativa>
-          ) : (
-            <TextField
-              type="file"
-              accept="image/*"
-              name="imagem_ilustrativa"
-              onChange={validateForm.handleImageValues}
-              fullWidth
-            />
-          )}
+          <TextField
+            type="text"
+            name="imagem_ilustrativa"
+            label="URL da imagem ilustrativa do game"
+            value={validateForm.values?.imagem_ilustrativa}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
+            fullWidth
+          />
 
           <TextField
             required
@@ -164,7 +163,7 @@ const FormGames = (props) => {
               validateForm.touched.id_categoria &&
               validateForm.errors.id_categoria
             }
-            sx={{ minWidth: 200 }}
+            sx={{ minWidth: 200, marginTop: "2rem" }}
             fullWidth
           >
             {categories}
@@ -189,6 +188,16 @@ const FormGames = (props) => {
             name="url_video"
             label="URL do vídeo"
             value={validateForm.values?.url_video}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
+            fullWidth
+          />
+
+          <Styles.TextField
+            type="text"
+            name="tags"
+            label="Tags de classificação"
+            value={validateForm.values?.tags}
             onChange={validateForm.handleChange}
             onBlur={validateForm.handleBlur}
             fullWidth

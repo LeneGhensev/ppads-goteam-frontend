@@ -19,35 +19,6 @@ const useValidateForm = ({ initialValues, validate }) => {
     });
   }
 
-  const handleImageValues = async (values) => {
-    let document = "";
-    let reader = new FileReader();
-
-    if (values.target.files[0].size > 100 * 1024) {
-      validateValues(values);
-
-      values.target.value = "";
-      return;
-    }
-
-    reader.readAsDataURL(values.target.files[0]);
-    reader.onload = function () {
-      document = reader.result;
-
-      document: document
-        ? String(document).replace(/^data:(.;base64,)?/, "")
-        : String(this.document).replace(/^data:(.;base64,)?/, "");
-
-      setValues((prevValue) => ({
-        ...prevValue,
-        [values.target.name]: document,
-      }));
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-    };
-  };
-
   function handleBlur(event) {
     setTouchedFields({
       ...touched,
@@ -66,7 +37,6 @@ const useValidateForm = ({ initialValues, validate }) => {
     handleBlur,
     setErrors,
     handleChange,
-    handleImageValues,
   };
 };
 
