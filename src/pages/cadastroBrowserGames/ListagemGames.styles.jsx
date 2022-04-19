@@ -53,14 +53,23 @@ const StyledContainerFiltro = styled.div`
   input {
     width: 400px;
   }
+`;
+
+const StyledContainerBotoesFiltro = styled.div`
+  display: flex;
+  min-width: 310px;
+  justify-content: flex-end;
 
   a {
     text-decoration: none;
   }
 
   button {
-    margin-left: 3rem;
-    width: 122px;
+    margin-left: 1rem;
+
+    :last-child {
+      width: 122px;
+    }
   }
 `;
 
@@ -70,4 +79,5 @@ export default {
   ContainerCircularProgress: StyledContainerCircularProgress,
   ContainerAddButton: StyledContainerAddButton,
   ContainerFiltro: StyledContainerFiltro,
+  ContainerBotoesFiltro: StyledContainerBotoesFiltro,
 };

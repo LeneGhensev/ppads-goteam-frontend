@@ -13,8 +13,19 @@ import Styles from "./ListagemGames.styles";
 
 const ListagemGames = () => {
   const [categories, setCategories] = useState();
-  const [listGames, setListGames] = useState();
+  const [listGames, setListGames] = useState([]);
+  const [filtros, setFiltros] = useState();
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleChangeFiltros = (event) => {
+    const fieldName = event.target.name;
+    const { value } = event.target;
+
+    setFiltros({
+      ...filtros,
+      [fieldName]: value,
+    });
+  };
 
   const getAllGames = async () => {
     setIsLoading(true);
@@ -46,8 +57,29 @@ const ListagemGames = () => {
     }
   };
 
-  const filtrarGames = () => {
-    console.log("filtrarGames");
+  const filtrarGames = (filtros) => {
+    let listaFiltrada = listGames;
+
+    if (filtros.nome) {
+      const nome = String(filtros?.nome).toLowerCase();
+
+      listaFiltrada = listaFiltrada.filter((game) =>
+        String(game.nome).toLowerCase().includes(nome)
+      );
+    }
+
+    if (filtros.id_categoria) {
+      listaFiltrada = listaFiltrada.filter(
+        (game) => game.categoria.id === filtros.id_categoria
+      );
+    }
+
+    setListGames(listaFiltrada);
+  };
+
+  const limparFiltros = () => {
+    setFiltros();
+    getAllGames();
   };
 
   useEffect(() => {
@@ -70,8 +102,8 @@ const ListagemGames = () => {
               type="text"
               name="nome"
               label="Nome"
-              value=""
-              onChange={() => console.log("onChange TextField")}
+              value={filtros?.nome || ""}
+              onChange={handleChangeFiltros}
             />
 
             <Select
@@ -79,16 +111,23 @@ const ListagemGames = () => {
               name="id_categoria"
               label="Categoria"
               labelId="categoria"
-              value=""
-              onChange={() => console.log("onChange Select")}
+              value={filtros?.id_categoria || ""}
+              onChange={handleChangeFiltros}
               sx={{ minWidth: 400 }}
             >
               {categories}
             </Select>
 
-            <Button variant="contained" onClick={filtrarGames}>
-              Pesquisar
-            </Button>
+            <Styles.ContainerBotoesFiltro>
+              {filtros && (
+                <Button variant="outlined" onClick={limparFiltros}>
+                  Limpar Filtros
+                </Button>
+              )}
+              <Button variant="contained" onClick={() => filtrarGames(filtros)}>
+                Pesquisar
+              </Button>
+            </Styles.ContainerBotoesFiltro>
           </Styles.ContainerFiltro>
 
           <Styles.ContainerAddButton>
