@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../../api/api";
 import { Link, useNavigate } from "react-router-dom";
-import { InputLabel, Select, MenuItem } from "@mui/material";
 
 import useValidateForm from "../../../hooks/useValidateForm";
 
 import Styles from "./FormGames.styles";
 import PageTitle from "../../../components/pageTitle/PageTitle";
+import Select from "../../../components/select/Select";
+import TextField from "../../../components/textfield/TextField";
 
 const FormGames = (props) => {
   const navigate = useNavigate();
@@ -102,15 +103,15 @@ const FormGames = (props) => {
             handleSubmit();
           }}
         >
-          <Styles.TextField
+          <TextField
             required
             type="text"
             name="nome"
             label="Nome"
             value={validateForm.values?.nome}
+            helperText={validateForm.touched.nome && validateForm.errors.nome}
             onChange={validateForm.handleChange}
             onBlur={validateForm.handleBlur}
-            helperText={validateForm.touched.nome && validateForm.errors.nome}
             fullWidth
           />
 
@@ -125,7 +126,7 @@ const FormGames = (props) => {
               <p>Clique na imagem para alterar</p>
             </Styles.ContainerImagemIlustrativa>
           ) : (
-            <Styles.TextField
+            <TextField
               type="file"
               accept="image/*"
               name="imagem_ilustrativa"
@@ -134,7 +135,7 @@ const FormGames = (props) => {
             />
           )}
 
-          <Styles.TextField
+          <TextField
             required
             type="text"
             name="descricao"
@@ -150,33 +151,26 @@ const FormGames = (props) => {
             fullWidth
           />
 
-          <Styles.FormControl fullWidth sx={{ minWidth: 200 }}>
-            <InputLabel id="categoria" sx={{ backgroundColor: "white" }}>
-              Categoria *
-            </InputLabel>
-            <Select
-              required
-              name="id_categoria"
-              labelId="categoria"
-              id="demo-simple-select-autowidth"
-              value={validateForm.values?.id_categoria}
-              onChange={validateForm.handleChange}
-              onBlur={validateForm.handleBlur}
-              helperText={
-                validateForm.touched.id_categoria &&
-                validateForm.errors.id_categoria
-              }
-              defaultValue=""
-            >
-              {categories?.map(({ id, nome }) => (
-                <MenuItem key={id} value={id}>
-                  {nome}
-                </MenuItem>
-              ))}
-            </Select>
-          </Styles.FormControl>
+          <Select
+            required
+            id="categoria"
+            name="id_categoria"
+            label="Categoria *"
+            labelId="categoria"
+            value={validateForm.values?.id_categoria}
+            onChange={validateForm.handleChange}
+            onBlur={validateForm.handleBlur}
+            helpertext={
+              validateForm.touched.id_categoria &&
+              validateForm.errors.id_categoria
+            }
+            sx={{ minWidth: 200 }}
+            fullWidth
+          >
+            {categories}
+          </Select>
 
-          <Styles.TextField
+          <TextField
             required
             type="text"
             name="url_acesso"
@@ -190,7 +184,7 @@ const FormGames = (props) => {
             fullWidth
           />
 
-          <Styles.TextField
+          <TextField
             type="text"
             name="url_video"
             label="URL do vídeo"

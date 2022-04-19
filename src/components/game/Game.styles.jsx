@@ -92,6 +92,10 @@ const StyledContainerButtons = styled.div`
     text-decoration: none;
     margin-bottom: 1rem;
   }
+
+  button:first-child {
+    color: #ff7300;
+  }
 `;
 
 export default {
