@@ -9,6 +9,8 @@ import CadastroCategoria from "./CadastroCategoria";
 import Categoria from "../../components/categoria/Categoria";
 import PageTitle from "../../components/pageTitle/PageTitle";
 
+import Styles from "./ListagemCategorias.styles";
+
 const ListagemCategorias = () => {
   const [listCategorias, setListCategorias] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -52,18 +54,22 @@ const ListagemCategorias = () => {
       <PageTitle>Categorias</PageTitle>
 
       {isLoading ? (
-        <CircularProgress />
+        <Styles.ContainerCircularProgress>
+          <CircularProgress />
+        </Styles.ContainerCircularProgress>
       ) : (
         <div>
           {inicioListagemCategorias && (
-            <Link to="/cadastroCategorias/novaCategoria">
-              <Button
-                variant="contained"
-                onClick={() => setInicioListagemCategorias(false)}
-              >
-                Nova Categoria
-              </Button>
-            </Link>
+            <Styles.ContainerBotaoNovaCategoria>
+              <Link to="/cadastroCategorias/novaCategoria">
+                <Button
+                  variant="contained"
+                  onClick={() => setInicioListagemCategorias(false)}
+                >
+                  Nova Categoria
+                </Button>
+              </Link>
+            </Styles.ContainerBotaoNovaCategoria>
           )}
 
           <CadastroCategoria

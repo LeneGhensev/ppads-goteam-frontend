@@ -4,20 +4,17 @@ import { Link } from "react-router-dom";
 import { Button, CircularProgress, TextField } from "@mui/material";
 
 import axios from "../../api/api";
+import Styles from "./CadastroCategoria.styles";
 
 const CadastroCategoria = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [categoria, setCategoria] = useState();
-  const [isLoading, setIsLoading] = useState(false);
   const [showFormCadastro, setShowFormCadastro] = useState(false);
 
   const edicaoCategoria = id ? true : false;
-  const titulo = id ? "Editar Categoria" : "Nova Categoria";
-  const textoBotaoConfirmar = id
-    ? "Salvar alterações"
-    : "Gravar nova Categoria";
+  const textoBotaoConfirmar = id ? "Salvar alterações" : "Cadastrar";
 
   const handleChange = (event) => {
     setCategoria(event.target.value);
@@ -52,12 +49,9 @@ const CadastroCategoria = (props) => {
 
   useEffect(() => {
     const getCategoryToEdit = async () => {
-      setIsLoading(true);
-
       try {
         const response = await axios.get(`/categoria/id/${id}`);
         setCategoria(response.data.nome);
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -70,54 +64,37 @@ const CadastroCategoria = (props) => {
   }, [id]);
 
   return (
-    <div>
-      {isLoading ? (
-        // <Styles.ContainerCircularProgress>
-        <CircularProgress />
-      ) : (
-        // </Styles.ContainerCircularProgress>
-        <div>
-          {(showFormCadastro || !props.inicioListagemCategorias) && (
-            <div>
-              <p>{titulo}</p>
+    <Styles.ContainerCadastroCategoria>
+      {(showFormCadastro || !props.inicioListagemCategorias) && (
+        <Styles.FormCategoria
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <TextField
+            required
+            type="text"
+            name="categoria"
+            label="Nome"
+            value={categoria || ""}
+            onChange={handleChange}
+          />
 
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  handleSubmit();
-                }}
-              >
-                <TextField
-                  //   required
-                  type="text"
-                  name="categoria"
-                  label="Nome"
-                  value={categoria || ""}
-                  onChange={handleChange}
-                  //   onChange={validateForm.handleChange}
-                  //   onBlur={validateForm.handleBlur}
-                  //   helperText={validateForm.touched.nome && validateForm.errors.nome}
-                  //   fullWidth
-                />
+          <Styles.ContainerBotoesCadastro>
+            <Link to="/cadastroCategorias">
+              <Button variant="outlined" onClick={handleCloseCadastroCategoria}>
+                Cancelar
+              </Button>
+            </Link>
 
-                <Link to="/cadastroCategorias">
-                  <Button
-                    variant="outlined"
-                    onClick={handleCloseCadastroCategoria}
-                  >
-                    Cancelar
-                  </Button>
-                </Link>
-
-                <Button type="submit" variant="contained">
-                  {textoBotaoConfirmar}
-                </Button>
-              </form>
-            </div>
-          )}
-        </div>
+            <Button type="submit" variant="contained">
+              {textoBotaoConfirmar}
+            </Button>
+          </Styles.ContainerBotoesCadastro>
+        </Styles.FormCategoria>
       )}
-    </div>
+    </Styles.ContainerCadastroCategoria>
   );
 };
 
