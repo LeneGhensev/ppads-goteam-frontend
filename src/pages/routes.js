@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+import Home from "../pages/home/Home";
 import ListagemGames from "./cadastroBrowserGames/ListagemGames";
 import CadastroGame from "./cadastroBrowserGames/CadastroGame";
 import ListagemCategorias from "./cadastroCategorias/ListagemCategorias";
@@ -9,7 +10,9 @@ import Page404 from "../pages/404/Page404";
 export default function GoodBrowserGamesRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<ListagemGames />} />
+      <Route path="/" element={<Home />} />
+
+      <Route path="/cadastroGames" element={<ListagemGames />} />
       <Route path="/cadastroGames/novoGame" element={<CadastroGame />} />
       <Route path="/cadastroGames/editarGame/:id" element={<CadastroGame />} />
 

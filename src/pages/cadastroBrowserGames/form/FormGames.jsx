@@ -85,7 +85,7 @@ const FormGames = (props) => {
       }
     }
 
-    navigate("/");
+    navigate("/cadastroGames");
   };
 
   useEffect(() => {
@@ -204,7 +204,7 @@ const FormGames = (props) => {
           />
 
           <Styles.ContainerButtons>
-            <Link to="/">
+            <Link to="/cadastroGames">
               <Styles.Button variant="outlined">Cancelar</Styles.Button>
             </Link>
 
