@@ -57,19 +57,21 @@ const FormGames = (props) => {
         errors.url_acesso = "Campo obrigatório";
       }
 
-      if (values.target?.files[0]?.size > 100 * 1024) {
-        errors.imagem_ilustrativa = "Tamanho máximo 100KB";
-      }
-
       return errors;
     },
   });
 
   const handleSubmit = async () => {
-    const { tags: tagToSplit } = validateForm.values;
-    const tags = tagToSplit?.split(",").map((tag) => tag.trim());
+    let values = { ...validateForm.values };
 
-    const values = { ...validateForm.values, tags };
+    if (validateForm.values.tags) {
+      const { tags: tagToSplit } = validateForm.values;
+      const tags = tagToSplit?.split(",").map((tag) => tag.trim());
+
+      values = { ...values, tags };
+    }
+
+    console.log(values);
 
     if (gameEditing) {
       try {
@@ -124,15 +126,27 @@ const FormGames = (props) => {
             fullWidth
           />
 
-          <TextField
-            type="text"
-            name="imagem_ilustrativa"
-            label="URL da imagem ilustrativa do game"
-            value={validateForm.values?.imagem_ilustrativa}
-            onChange={validateForm.handleChange}
-            onBlur={validateForm.handleBlur}
-            fullWidth
-          />
+          {validateForm.values?.imagem_ilustrativa ? (
+            <Styles.ContainerImagemIlustrativa>
+              <img
+                src={validateForm.values?.imagem_ilustrativa}
+                alt="Imagem ilustrativa do Game"
+                name="imagem_ilustrativa"
+                onClick={validateForm.handleChange}
+              />
+              <p>Clique na imagem para alterar</p>
+            </Styles.ContainerImagemIlustrativa>
+          ) : (
+            <TextField
+              type="text"
+              name="imagem_ilustrativa"
+              label="URL da imagem ilustrativa do game"
+              value={validateForm.values?.imagem_ilustrativa}
+              onChange={validateForm.handleChange}
+              onBlur={validateForm.handleBlur}
+              fullWidth
+            />
+          )}
 
           <TextField
             required

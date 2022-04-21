@@ -42,7 +42,7 @@ const StyledContainerAddButton = styled.div`
 const StyledContainerFiltro = styled.div`
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: left;
   padding: 1rem 12rem;
   width: 80vw;
 
@@ -57,7 +57,7 @@ const StyledContainerFiltro = styled.div`
 
 const StyledContainerBotoesFiltro = styled.div`
   display: flex;
-  min-width: 310px;
+  min-width: 200px;
   justify-content: flex-end;
 
   a {
@@ -65,11 +65,7 @@ const StyledContainerBotoesFiltro = styled.div`
   }
 
   button {
-    margin-left: 1rem;
-
-    :last-child {
-      width: 122px;
-    }
+    width: 200px;
   }
 `;
 
