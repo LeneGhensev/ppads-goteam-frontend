@@ -61,6 +61,25 @@ const FormGames = (props) => {
     },
   });
 
+  const uploadImagemIlustrativa = async (event) => {
+    const formData = new FormData();
+    formData.append("filetoupload", event.target.files[0]);
+
+    try {
+      console.log("try", formData);
+
+      const response = await axios.post("/file", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      validateForm.values.imagem_ilustrativa = response.data.url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async () => {
     let values = { ...validateForm.values };
 
@@ -109,6 +128,7 @@ const FormGames = (props) => {
 
       <Styles.Container>
         <Styles.Form
+          enctype="multipart/form-data"
           onSubmit={(event) => {
             event.preventDefault();
             handleSubmit();
@@ -138,11 +158,12 @@ const FormGames = (props) => {
             </Styles.ContainerImagemIlustrativa>
           ) : (
             <TextField
-              type="text"
+              type="file"
+              accept="image/*"
               name="imagem_ilustrativa"
               label="URL da imagem ilustrativa do game"
               value={validateForm.values?.imagem_ilustrativa}
-              onChange={validateForm.handleChange}
+              onChange={(event) => uploadImagemIlustrativa(event)}
               onBlur={validateForm.handleBlur}
               fullWidth
             />
