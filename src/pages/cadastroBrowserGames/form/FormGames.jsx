@@ -33,7 +33,7 @@ const FormGames = (props) => {
       nome: props?.game?.nome,
       imagem_ilustrativa: props?.game?.imagem_ilustrativa,
       descricao: props?.game?.descricao,
-      id_categoria: props?.game?.categoria.id,
+      id_categoria: props?.game?.categoria?.id,
       url_acesso: props?.game?.url_acesso,
       url_video: props?.game?.url_video,
       tags: tags,

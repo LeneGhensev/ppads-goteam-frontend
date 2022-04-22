@@ -81,7 +81,7 @@ const ListagemGames = () => {
 
     if (filtros?.id_categoria) {
       listaFiltrada = listaFiltrada.filter(
-        (game) => game.categoria.id === filtros.id_categoria
+        (game) => game?.categoria?.id === filtros.id_categoria
       );
     }
 
