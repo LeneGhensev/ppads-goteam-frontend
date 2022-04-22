@@ -12,26 +12,19 @@ import TextField from "../../components/textfield/TextField";
 import Styles from "./ListagemGames.styles";
 
 const ListagemGames = () => {
-  const [categories, setCategories] = useState();
-  const [listGames, setListGames] = useState([]);
-  const [filtros, setFiltros] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [allGames, setAllGames] = useState([]);
+  const [filtros, setFiltros] = useState(null);
+  const [gamesFiltrados, setGamesFiltrados] = useState(allGames);
 
-  const handleChangeFiltros = (event) => {
-    const fieldName = event.target.name;
-    const { value } = event.target;
-
-    setFiltros({
-      ...filtros,
-      [fieldName]: value,
-    });
-  };
+  const games = !!filtros ? gamesFiltrados : allGames;
 
   const getAllGames = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get("/games");
-      setListGames(response.data);
+      setAllGames(response.data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -57,10 +50,28 @@ const ListagemGames = () => {
     }
   };
 
-  const filtrarGames = (filtros) => {
-    let listaFiltrada = listGames;
+  const handleChangeFiltros = (event) => {
+    const fieldName = event.target.name;
+    const { value } = event.target;
 
-    if (filtros.nome) {
+    if (fieldName === "nome" && value === "") {
+      delete filtros.nome;
+
+      setFiltros({
+        ...filtros,
+      });
+    } else {
+      setFiltros({
+        ...filtros,
+        [fieldName]: value,
+      });
+    }
+  };
+
+  const filtrarGames = (filtros) => {
+    let listaFiltrada = allGames;
+
+    if (filtros?.nome) {
       const nome = String(filtros?.nome).toLowerCase();
 
       listaFiltrada = listaFiltrada.filter((game) =>
@@ -68,13 +79,13 @@ const ListagemGames = () => {
       );
     }
 
-    if (filtros.id_categoria) {
+    if (filtros?.id_categoria) {
       listaFiltrada = listaFiltrada.filter(
-        (game) => game.categoria.id === filtros.id_categoria
+        (game) => game?.categoria?.id === filtros.id_categoria
       );
     }
 
-    setListGames(listaFiltrada);
+    setGamesFiltrados(listaFiltrada);
   };
 
   const limparFiltros = () => {
@@ -86,6 +97,10 @@ const ListagemGames = () => {
     getCategories();
     getAllGames();
   }, []);
+
+  useEffect(() => {
+    filtrarGames(filtros);
+  }, [filtros]);
 
   return (
     <Styles.ContainerListGames>
@@ -103,6 +118,7 @@ const ListagemGames = () => {
               name="nome"
               label="Nome"
               value={filtros?.nome || ""}
+              handleChangeFiltros
               onChange={handleChangeFiltros}
             />
 
@@ -112,21 +128,18 @@ const ListagemGames = () => {
               label="Categoria"
               labelId="categoria"
               value={filtros?.id_categoria || ""}
-              onChange={handleChangeFiltros}
               sx={{ minWidth: 400 }}
+              onChange={handleChangeFiltros}
             >
               {categories}
             </Select>
 
             <Styles.ContainerBotoesFiltro>
-              {filtros && (
+              {(filtros?.nome || filtros?.id_categoria) && (
                 <Button variant="outlined" onClick={limparFiltros}>
                   Limpar Filtros
                 </Button>
               )}
-              <Button variant="contained" onClick={() => filtrarGames(filtros)}>
-                Pesquisar
-              </Button>
             </Styles.ContainerBotoesFiltro>
           </Styles.ContainerFiltro>
 
@@ -136,11 +149,11 @@ const ListagemGames = () => {
             </Link>
           </Styles.ContainerAddButton>
 
-          {!listGames ? (
+          {games.length === 0 ? (
             <p>Não há Games cadastrados.</p>
           ) : (
-            listGames?.map((game) => {
-              console.log(game);
+            games.map((game) => {
+              // console.log(game);
               return <Game key={game.id} game={game} deleteGame={deleteGame} />;
             })
           )}

@@ -33,7 +33,7 @@ const FormGames = (props) => {
       nome: props?.game?.nome,
       imagem_ilustrativa: props?.game?.imagem_ilustrativa,
       descricao: props?.game?.descricao,
-      id_categoria: props?.game?.categoria.id,
+      id_categoria: props?.game?.categoria?.id,
       url_acesso: props?.game?.url_acesso,
       url_video: props?.game?.url_video,
       tags: tags,
@@ -57,19 +57,40 @@ const FormGames = (props) => {
         errors.url_acesso = "Campo obrigatório";
       }
 
-      if (values.target?.files[0]?.size > 100 * 1024) {
-        errors.imagem_ilustrativa = "Tamanho máximo 100KB";
-      }
-
       return errors;
     },
   });
 
-  const handleSubmit = async () => {
-    const { tags: tagToSplit } = validateForm.values;
-    const tags = tagToSplit?.split(",").map((tag) => tag.trim());
+  const uploadImagemIlustrativa = async (event) => {
+    const formData = new FormData();
+    formData.append("filetoupload", event.target.files[0]);
 
-    const values = { ...validateForm.values, tags };
+    try {
+      console.log("try", formData);
+
+      const response = await axios.post("/file", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      validateForm.values.imagem_ilustrativa = response.data.url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    let values = { ...validateForm.values };
+
+    if (validateForm.values.tags) {
+      const { tags: tagToSplit } = validateForm.values;
+      const tags = tagToSplit?.split(",").map((tag) => tag.trim());
+
+      values = { ...values, tags };
+    }
+
+    console.log(values);
 
     if (gameEditing) {
       try {
@@ -107,6 +128,7 @@ const FormGames = (props) => {
 
       <Styles.Container>
         <Styles.Form
+          enctype="multipart/form-data"
           onSubmit={(event) => {
             event.preventDefault();
             handleSubmit();
@@ -124,15 +146,28 @@ const FormGames = (props) => {
             fullWidth
           />
 
-          <TextField
-            type="text"
-            name="imagem_ilustrativa"
-            label="URL da imagem ilustrativa do game"
-            value={validateForm.values?.imagem_ilustrativa}
-            onChange={validateForm.handleChange}
-            onBlur={validateForm.handleBlur}
-            fullWidth
-          />
+          {validateForm.values?.imagem_ilustrativa ? (
+            <Styles.ContainerImagemIlustrativa>
+              <img
+                src={validateForm.values?.imagem_ilustrativa}
+                alt="Imagem ilustrativa do Game"
+                name="imagem_ilustrativa"
+                onClick={validateForm.handleChange}
+              />
+              <p>Clique na imagem para alterar</p>
+            </Styles.ContainerImagemIlustrativa>
+          ) : (
+            <TextField
+              type="file"
+              accept="image/*"
+              name="imagem_ilustrativa"
+              label="URL da imagem ilustrativa do game"
+              value={validateForm.values?.imagem_ilustrativa}
+              onChange={(event) => uploadImagemIlustrativa(event)}
+              onBlur={validateForm.handleBlur}
+              fullWidth
+            />
+          )}
 
           <TextField
             required
