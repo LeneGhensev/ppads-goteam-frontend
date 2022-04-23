@@ -24,7 +24,14 @@ const StyledContainerCircularProgress = styled.div`
   align-items: center;
 `;
 
+const StyledContainerListCategorias = styled.div`
+  width: 100vw;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+`;
+
 export default {
   ContainerBotaoNovaCategoria: StyledContainerBotaoNovaCategoria,
   ContainerCircularProgress: StyledContainerCircularProgress,
+  ContainerListCategorias: StyledContainerListCategorias,
 };

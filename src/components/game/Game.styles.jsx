@@ -11,7 +11,7 @@ const StyledCard = styled.article`
   border-radius: 8px;
   width: 100vw;
   padding: 1rem;
-  background-color: #d6e3f3;
+  background-color: rgba(63, 191, 155, 0.2);
 
   :hover {
     box-shadow: 2px 2px 8px 2px #f0ebeb;
@@ -61,7 +61,7 @@ const StyledGameUrl = styled.a`
   }
 
   :hover {
-    color: blue;
+    color: #72726e;
   }
 `;
 
@@ -70,7 +70,7 @@ const StyledContainerTags = styled.div`
   margin: 1rem 0 0;
 
   div {
-    background-color: #8ecef3;
+    background-color: rgba(63, 191, 155, 0.4);
     border-radius: 8px;
     padding: 0.5rem 0.8rem;
     margin: 0 0.5rem;
@@ -96,7 +96,7 @@ const StyledContainerButtons = styled.div`
   }
 
   button:first-child {
-    color: #ff7300;
+    color: #eb6003;
   }
 `;
 

@@ -12,7 +12,7 @@ const StyledCard = styled.article`
   border-radius: 8px;
   width: 100vw;
   padding: 1rem;
-  background-color: #d6e3f3;
+  background-color: rgba(63, 191, 155, 0.2);
 
   :hover {
     box-shadow: 2px 2px 8px 2px #f0ebeb;
@@ -33,7 +33,7 @@ const StyledContainerBotoes = styled.div`
   }
 
   button:first-child {
-    color: #ff7300;
+    color: #eb6003;
   }
 `;
 
