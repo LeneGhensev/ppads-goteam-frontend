@@ -50,7 +50,7 @@ const ListagemCategorias = () => {
   }, [inicioListagemCategorias]);
 
   return (
-    <div>
+    <Styles.ContainerListCategorias>
       <PageTitle>Categorias</PageTitle>
 
       {isLoading ? (
@@ -93,7 +93,7 @@ const ListagemCategorias = () => {
           )}
         </div>
       )}
-    </div>
+    </Styles.ContainerListCategorias>
   );
 };
 
