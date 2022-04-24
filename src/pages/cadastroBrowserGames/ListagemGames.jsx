@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "../../api/api";
 import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
+import axios from "../../api/api";
 import PageTitle from "../../components/pageTitle/PageTitle";
 import Game from "../../components/game/Game";
 import Select from "../../components/select/Select";
@@ -22,6 +22,7 @@ const ListagemGames = () => {
 
   const getAllGames = async () => {
     setIsLoading(true);
+
     try {
       const response = await axios.get("/games");
       setAllGames(response.data);
