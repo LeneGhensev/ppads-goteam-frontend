@@ -22,39 +22,49 @@ const Game = (props) => {
   return (
     <Styles.ContainerGame>
       <Styles.Card>
-        <Styles.ImagemIlustrativa>
-          {imagem_ilustrativa ? (
-            <img src={imagem_ilustrativa} alt="Imagem ilustrativa do Game" />
-          ) : (
-            <img src={defaultImage} alt="Imagem ilustrativa do Game" />
-          )}
-        </Styles.ImagemIlustrativa>
+        <Link to={`/detalhesGame/${id}`}>
+          <Styles.ImagemIlustrativa>
+            {imagem_ilustrativa ? (
+              <img src={imagem_ilustrativa} alt="Imagem ilustrativa do Game" />
+            ) : (
+              <img src={defaultImage} alt="Imagem ilustrativa do Game" />
+            )}
+          </Styles.ImagemIlustrativa>
 
-        <Styles.ContainerBrowserGameInfo>
-          <Styles.Title>{nome}</Styles.Title>
+          <Styles.ContainerBrowserGameInfo>
+            <Styles.Title>{nome}</Styles.Title>
 
-          <Styles.Description>{descricao}</Styles.Description>
+            <Styles.Description>{descricao}</Styles.Description>
 
-          <Styles.Category>
-            <strong>Categoria:</strong> {categoria?.nome}
-          </Styles.Category>
+            <Styles.Category>
+              <strong>Categoria:</strong> {categoria?.nome}
+            </Styles.Category>
 
-          <Styles.AccessUrl href={url_acesso} target="_blank" rel="noreferrer">
-            <p>Jogue agora!</p>
-          </Styles.AccessUrl>
+            <Styles.AccessUrl
+              href={url_acesso}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <p>Jogue agora!</p>
+            </Styles.AccessUrl>
 
-          {url_video && (
-            <Styles.VideoUrl href={url_video} target="_blank" rel="noreferrer">
-              <p>Assista ao vídeo demonstrativo</p>
-            </Styles.VideoUrl>
-          )}
+            {url_video && (
+              <Styles.VideoUrl
+                href={url_video}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <p>Assista ao vídeo demonstrativo</p>
+              </Styles.VideoUrl>
+            )}
 
-          <Styles.Tags>
-            {tags?.map((element, index) => (
-              <div key={index}>{element.nome}</div>
-            ))}
-          </Styles.Tags>
-        </Styles.ContainerBrowserGameInfo>
+            <Styles.Tags>
+              {tags?.map((element, index) => (
+                <div key={index}>{element.nome}</div>
+              ))}
+            </Styles.Tags>
+          </Styles.ContainerBrowserGameInfo>
+        </Link>
 
         <Styles.ContainerButtons>
           <Link to={`/cadastroGames/editarGame/${id}`}>

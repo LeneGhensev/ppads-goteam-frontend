@@ -8,10 +8,18 @@ const StyledContainerGame = styled.div`
 
 const StyledCard = styled.article`
   display: flex;
-  border-radius: 8px;
   width: 100vw;
   padding: 1rem;
   background-color: rgba(63, 191, 155, 0.2);
+
+  a {
+    text-decoration: none;
+    color: black;
+
+    display: flex;
+    width: 100%;
+    border-radius: 8px;
+  }
 
   :hover {
     box-shadow: 2px 2px 8px 2px #f0ebeb;
@@ -19,9 +27,10 @@ const StyledCard = styled.article`
 `;
 
 const StyledImagemIlustrativa = styled.div`
+  text-align: center;
   margin-right: 1rem;
-  max-width: 180px;
-  max-height: 120px;
+  min-width: 180px;
+  min-height: 120px;
 
   img {
     border-radius: 8px;
