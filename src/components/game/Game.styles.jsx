@@ -10,6 +10,7 @@ const StyledCard = styled.article`
   display: flex;
   width: 100vw;
   padding: 1rem;
+  border-radius: 8px;
   background-color: rgba(63, 191, 155, 0.2);
 
   a {
@@ -18,7 +19,6 @@ const StyledCard = styled.article`
 
     display: flex;
     width: 100%;
-    border-radius: 8px;
   }
 
   :hover {
