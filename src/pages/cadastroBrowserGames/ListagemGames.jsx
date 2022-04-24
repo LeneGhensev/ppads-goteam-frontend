@@ -153,7 +153,6 @@ const ListagemGames = () => {
             <p>Não há Games cadastrados.</p>
           ) : (
             games.map((game) => {
-              // console.log(game);
               return <Game key={game.id} game={game} deleteGame={deleteGame} />;
             })
           )}
