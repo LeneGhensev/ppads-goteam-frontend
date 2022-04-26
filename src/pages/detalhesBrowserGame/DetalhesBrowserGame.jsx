@@ -17,6 +17,8 @@ const DetalhesBrowserGame = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showCamposParaAvaliar, setShowCamposParaAvaliar] = useState(false);
 
+  console.log(showCamposParaAvaliar);
+
   useEffect(() => {
     const getGame = async () => {
       setIsLoading(true);
@@ -89,7 +91,7 @@ const DetalhesBrowserGame = (props) => {
             <AvaliarGame avaliar={setShowCamposParaAvaliar} />
           )}
 
-          <Avaliacoes />
+          <Avaliacoes avaliar={setShowCamposParaAvaliar} />
         </div>
       )}
     </Styles.ContainerDetalhesGame>

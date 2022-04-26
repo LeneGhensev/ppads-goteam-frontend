@@ -7,15 +7,14 @@ import Avaliacao from "./Avaliacao";
 
 import Styles from "./Avaliacoes.styles";
 
-const Avaliacoes = () => {
+const Avaliacoes = (props) => {
   const { id: idGame } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
   const [avaliacoes, setAvaliacoes] = useState([]);
 
-  // const mockAvaliacoes = [{ id: "1" }, { id: "2" }];
-
   console.log(avaliacoes);
+  console.log(props);
 
   const getAvaliacoesDoGame = async () => {
     setIsLoading(true);
@@ -48,7 +47,12 @@ const Avaliacoes = () => {
           ) : (
             avaliacoes?.map((avaliacao) => {
               // ordenar do maior para o menor
-              return <Avaliacao avaliacao={avaliacao} />;
+              return (
+                <Avaliacao
+                  avaliacao={avaliacao}
+                  editar={props.setShowCamposParaAvaliar}
+                />
+              );
             })
           )}
         </div>
