@@ -11,42 +11,46 @@ const Avaliacoes = () => {
   const { id: idGame } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [avaliacoes, setAvaliacoes] = useState();
+  const [avaliacoes, setAvaliacoes] = useState([]);
 
-  const mockAvaliacoes = [{ id: "1" }, { id: "2" }];
+  // const mockAvaliacoes = [{ id: "1" }, { id: "2" }];
 
   console.log(avaliacoes);
 
-  //   const getAvaliacoesDoGame = async () => {
-  //     setIsLoading(true);
+  const getAvaliacoesDoGame = async () => {
+    setIsLoading(true);
 
-  //     try {
-  //       const response = await axios.get(`/avaliacoes/game/id/${idGame}`);
-  //       setAvaliacoes(response.data);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       setIsLoading(false);
-  //       console.log(error);
-  //     }
-  //   };
+    try {
+      const response = await axios.get(`/avaliacoes/game/id/${idGame}`);
+      setAvaliacoes(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
 
-  //   useEffect(() => {
-  //     getAvaliacoesDoGame();
-  //   }, [idGame]);
+  useEffect(() => {
+    getAvaliacoesDoGame();
+  }, [idGame]);
 
   return (
     <Styles.ContainerAvaliacoes>
-      <h1>Container de todas as avaliações do game</h1>
+      <h2>Avaliações</h2>
       {isLoading ? (
         <Styles.ContainerCircularProgress>
           <CircularProgress />
         </Styles.ContainerCircularProgress>
       ) : (
         <div>
-          {mockAvaliacoes?.map((avaliacao) => {
-            // ordenar do maior para o menor
-            return <Avaliacao avaliacao={avaliacao} />;
-          })}
+          {avaliacoes.length === 0 ? (
+            <p>Este Game ainda não foi avaliado :(</p>
+          ) : (
+            avaliacoes?.map((avaliacao) => {
+              // ordenar do maior para o menor
+              return <Avaliacao avaliacao={avaliacao} />;
+            })
+          )}
         </div>
       )}
     </Styles.ContainerAvaliacoes>
