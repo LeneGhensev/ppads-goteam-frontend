@@ -4,16 +4,16 @@ import Button, { buttonClasses } from "@mui/material/Button";
 const buttonRoot = `.${buttonClasses.root}`;
 
 const StyledAvaliarGame = styled.form`
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   padding: 1rem;
-  margin: 2rem;
+  margin: 3rem 5rem;
   border-radius: 8px;
 `;
 
 const StyledContainerButtons = styled.div`
-  padding: 4rem 0 0;
+  padding: 3rem 0 0;
   display: flex;
-  justify-content: center;
+  justify-content: end;
 
   a {
     text-decoration: none;
@@ -22,7 +22,7 @@ const StyledContainerButtons = styled.div`
 
 const StyledButton = styled(Button)`
   &${buttonRoot} {
-    width: 20rem;
+    width: 15rem;
 
     :first-child {
       margin-right: 2rem;

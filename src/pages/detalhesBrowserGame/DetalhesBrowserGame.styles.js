@@ -8,15 +8,62 @@ const StyledContainerDetalhesGame = styled.div`
 
 const StyledInformacoesGame = styled.div`
   display: flex;
-  background-color: #f2f2f2;
+  background-color: rgba(63, 191, 155, 0.2);
   padding: 3rem;
-  margin: 2rem;
+  margin: 3rem 5rem;
   border-radius: 8px;
+  text-align: justify;
+  font-size: 18px;
 
   img {
-    margin-right: 1rem;
-    min-width: 400px;
+    margin-right: 2rem;
+    min-width: 350px;
+    border-radius: 8px;
   }
+
+  p {
+    margin-top: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+    margin: 0.5rem 0;
+
+    p {
+      margin: 0;
+    }
+
+    :hover {
+      color: #72726e;
+    }
+  }
+`;
+
+const StyledContainerTags = styled.div`
+  display: flex;
+  margin: 1rem 0 0;
+
+  div {
+    background-color: rgba(63, 191, 155, 0.4);
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    margin: 0 0.5rem;
+
+    :first-child {
+      margin-left: 0;
+    }
+
+    :last-child {
+      margin-right: 0;
+    }
+  }
+`;
+
+const StyledContainerBotaoAvaliarGame = styled.form`
+  margin: 3rem 5rem;
+  border-radius: 8px;
+  text-align: end;
 `;
 
 const StyledContainerCircularProgress = styled.div`
@@ -29,5 +76,7 @@ const StyledContainerCircularProgress = styled.div`
 export default {
   ContainerDetalhesGame: StyledContainerDetalhesGame,
   InformacoesGame: StyledInformacoesGame,
+  Tags: StyledContainerTags,
+  ContainerBotaoAvaliarGame: StyledContainerBotaoAvaliarGame,
   ContainerCircularProgress: StyledContainerCircularProgress,
 };
