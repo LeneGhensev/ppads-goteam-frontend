@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Button } from "@mui/material";
@@ -10,36 +10,108 @@ import AvaliarGame from "../../components/avaliarGame/AvaliarGame";
 
 import Styles from "./DetalhesBrowserGame.styles";
 
-const DetalhesBrowserGame = (props) => {
-  const { id } = useParams();
+const DetalhesBrowserGame = () => {
+  const { id: idGame } = useParams();
+  const idUsuario = 1;
 
   const [game, setGame] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const [showCamposParaAvaliar, setShowCamposParaAvaliar] = useState(false);
+  const [isLoadingGame, setIsLoadingGame] = useState(false);
 
-  console.log(showCamposParaAvaliar);
+  const [avaliacoes, setAvaliacoes] = useState([]);
+  const [isLoadingAvaliacoes, setIsLoadingAvaliacoes] = useState(false);
+
+  const [showAvaliarGame, setShowAvaliarGame] = useState(false);
+  const [avaliacaoParaEditar, setAvaliacaoParaEditar] = useState();
+
+  const mostraAvaliarGame = useCallback(() => {
+    setAvaliacaoParaEditar();
+    setShowAvaliarGame(!showAvaliarGame);
+  }, [showAvaliarGame, setShowAvaliarGame]);
+
+  const editarAvaliacao = useCallback(
+    (avaliacao) => {
+      mostraAvaliarGame();
+      setAvaliacaoParaEditar(avaliacao);
+    },
+    [avaliacaoParaEditar, setAvaliacaoParaEditar]
+  );
+
+  const getAvaliacoesDoGame = async () => {
+    setIsLoadingAvaliacoes(true);
+
+    try {
+      const response = await axios.get(`/avaliacoes/game/id/${idGame}`);
+      setAvaliacoes(response.data);
+      setIsLoadingAvaliacoes(false);
+    } catch (error) {
+      setIsLoadingAvaliacoes(false);
+      console.log(error);
+    }
+  };
+
+  const deleteAvaliacao = async (id) => {
+    mostraAvaliarGame();
+
+    try {
+      await axios.delete(`/avaliacao/id/${id}`);
+      getAvaliacoesDoGame();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmitAvaliacao = async (validateFormValues) => {
+    mostraAvaliarGame();
+
+    let values = {
+      ...validateFormValues,
+      estrela: Number(validateFormValues.estrela),
+      id_game: Number(idGame),
+      id_usuario: idUsuario,
+    };
+
+    const idAvaliacao = avaliacaoParaEditar?.id;
+
+    if (avaliacaoParaEditar) {
+      try {
+        await axios.put(`/avaliacao/id/${idAvaliacao}`, values);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await axios.post("/avaliacao", values);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getAvaliacoesDoGame();
+  };
 
   useEffect(() => {
     const getGame = async () => {
-      setIsLoading(true);
+      setIsLoadingGame(true);
 
       try {
-        const response = await axios.get(`/game/id/${id}`);
+        const response = await axios.get(`/game/id/${idGame}`);
         setGame(response.data);
-        setIsLoading(false);
+        setIsLoadingGame(false);
       } catch (error) {
+        setIsLoadingGame(false);
         console.log(error);
       }
     };
 
-    if (id) {
+    if (idGame) {
       getGame();
+      getAvaliacoesDoGame();
     }
-  }, [id]);
+  }, [idGame]);
 
   return (
     <Styles.ContainerDetalhesGame>
-      {isLoading ? (
+      {isLoadingGame ? (
         <Styles.ContainerCircularProgress>
           <CircularProgress />
         </Styles.ContainerCircularProgress>
@@ -78,20 +150,27 @@ const DetalhesBrowserGame = (props) => {
             </div>
           </Styles.InformacoesGame>
 
-          {!showCamposParaAvaliar ? (
+          {!showAvaliarGame ? (
             <Styles.ContainerBotaoAvaliarGame>
-              <Button
-                variant="contained"
-                onClick={() => setShowCamposParaAvaliar(true)}
-              >
+              <Button variant="contained" onClick={mostraAvaliarGame}>
                 Avaliar
               </Button>
             </Styles.ContainerBotaoAvaliarGame>
           ) : (
-            <AvaliarGame avaliar={setShowCamposParaAvaliar} />
+            <AvaliarGame
+              avaliacao={avaliacaoParaEditar}
+              handleSubmitAvaliacao={handleSubmitAvaliacao}
+              mostraAvaliarGame={mostraAvaliarGame}
+            />
           )}
 
-          <Avaliacoes avaliar={setShowCamposParaAvaliar} />
+          <Avaliacoes
+            usuarioLogado={idUsuario}
+            avaliacoes={avaliacoes}
+            isLoadingAvaliacoes={isLoadingAvaliacoes}
+            editarAvaliacao={editarAvaliacao}
+            deleteAvaliacao={deleteAvaliacao}
+          />
         </div>
       )}
     </Styles.ContainerDetalhesGame>

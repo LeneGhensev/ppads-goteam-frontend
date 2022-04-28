@@ -24,6 +24,11 @@ const StyledUserName = styled.p`
   margin-right: 1rem;
 `;
 
+const StyledDataDaAvaliacao = styled.p`
+  font-size: 14px;
+  margin-left: 1rem;
+`;
+
 const StyledContainerButtons = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,6 +48,7 @@ export default {
   ContainerAvaliacao: StyledContainerAvaliacao,
   Avaliacao: StyledAvaliacao,
   UserName: StyledUserName,
+  DataDaAvaliacao: StyledDataDaAvaliacao,
   ContainerUsuarioEstrelas: StyledContainerUsuarioEstrelas,
   ContainerButtons: StyledContainerButtons,
 };

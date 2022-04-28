@@ -7,8 +7,16 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Styles from "./Avaliacao.styles";
 
 const Avaliacao = (props) => {
-  console.log(props);
+  const usuarioPodeEditar = props.usuarioLogado === props.avaliacao.usuario.id;
+  const dataCreatedAt = new Date(`${props.avaliacao?.createdAt}`);
+  const dataDaAvaliacao =
+    dataCreatedAt.getDate() +
+    "/" +
+    (dataCreatedAt.getMonth() + 1) +
+    "/" +
+    dataCreatedAt.getFullYear();
 
+  console.log(dataDaAvaliacao);
   return (
     <Styles.ContainerAvaliacao>
       <Styles.Avaliacao>
@@ -24,18 +32,30 @@ const Avaliacao = (props) => {
             size="small"
             readOnly
           />
+
+          <Styles.DataDaAvaliacao>{dataDaAvaliacao}</Styles.DataDaAvaliacao>
         </Styles.ContainerUsuarioEstrelas>
 
         <p>{props.avaliacao?.comentario}</p>
       </Styles.Avaliacao>
 
-      <Styles.ContainerButtons>
-        <Button startIcon={<ModeEditIcon />} onClick={() => props.editar(true)}>
-          Editar
-        </Button>
+      {usuarioPodeEditar && (
+        <Styles.ContainerButtons>
+          <Button
+            startIcon={<ModeEditIcon />}
+            onClick={() => props.editarAvaliacao(props.avaliacao)}
+          >
+            Editar
+          </Button>
 
-        <Button startIcon={<DeleteIcon />}>Apagar</Button>
-      </Styles.ContainerButtons>
+          <Button
+            startIcon={<DeleteIcon />}
+            onClick={() => props.deleteAvaliacao(props.avaliacao.id)}
+          >
+            Apagar
+          </Button>
+        </Styles.ContainerButtons>
+      )}
     </Styles.ContainerAvaliacao>
   );
 };
