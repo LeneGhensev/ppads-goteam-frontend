@@ -36,7 +36,9 @@ const CadastroGame = () => {
           <CircularProgress />
         </Styles.ContainerCircularProgress>
       ) : (
-        <FormGames game={game} />
+        <Styles.ContainerForm>
+          <FormGames game={game} />
+        </Styles.ContainerForm>
       )}
     </div>
   );
