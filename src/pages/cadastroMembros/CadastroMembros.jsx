@@ -176,7 +176,7 @@ const CadastroMembros = (props) => {
               </Styles.InputLabel>
               <TextField
                 required
-                type="date"
+                type="text"
                 id="data_de_nasc"
                 name="data_de_nasc"
                 value={validateForm.values?.data_de_nasc}
