@@ -101,7 +101,7 @@ const CadastroMembros = (props) => {
       try {
         console.log(`post(/usuario, ${values}`);
 
-        await axios.post("/usuario", values);
+        // await axios.post("/usuario", values);
       } catch (error) {
         console.log(error);
       }

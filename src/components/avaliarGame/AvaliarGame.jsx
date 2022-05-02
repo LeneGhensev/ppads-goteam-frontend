@@ -56,6 +56,7 @@ const AvaliarGame = (props) => {
           validateForm.touched.comentario && validateForm.errors.comentario
         }
         fullWidth
+        sx={{ marginTop: "1rem" }}
       />
 
       <Styles.ContainerButtons>

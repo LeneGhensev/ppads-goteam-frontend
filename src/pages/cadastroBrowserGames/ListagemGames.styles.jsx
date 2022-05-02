@@ -13,6 +13,7 @@ const StyledContainerGamesEmpty = styled.div`
   display: flex;
   justify-content: center;
   font-size: 2rem;
+  margin-top: 2rem;
 `;
 
 const StyledContainerCircularProgress = styled.div`

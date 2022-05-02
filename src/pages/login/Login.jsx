@@ -13,14 +13,19 @@ import Styles from "./Login.styles";
 const Login = () => {
   const validateForm = useValidateForm({
     initialValues: {
-      usuario: "",
+      // usuario: "",
+      email: "",
       senha: "",
     },
     validate: function (values) {
       const errors = {};
 
-      if (values.usuario === "") {
-        errors.usuario = "Campo obrigatório";
+      // if (values.usuario === "") {
+      //   errors.usuario = "Campo obrigatório";
+      // }
+
+      if (values.email === "") {
+        errors.email = "Campo obrigatório";
       }
 
       if (values.senha === "") {
@@ -60,7 +65,7 @@ const Login = () => {
             handleSubmit();
           }}
         >
-          <Styles.FormControl>
+          {/* <Styles.FormControl>
             <Styles.InputLabel htmlFor="usuario">Usuário *</Styles.InputLabel>
             <TextField
               required
@@ -71,6 +76,23 @@ const Login = () => {
               value={validateForm.values?.usuario}
               helperText={
                 validateForm.touched.usuario && validateForm.errors.usuario
+              }
+              onChange={validateForm.handleChange}
+              onBlur={validateForm.handleBlur}
+            />
+          </Styles.FormControl> */}
+
+          <Styles.FormControl>
+            <Styles.InputLabel htmlFor="email">Email *</Styles.InputLabel>
+            <TextField
+              required
+              type="text"
+              id="email"
+              name="email"
+              sx={{ width: "500px" }}
+              value={validateForm.values?.email}
+              helperText={
+                validateForm.touched.email && validateForm.errors.email
               }
               onChange={validateForm.handleChange}
               onBlur={validateForm.handleBlur}

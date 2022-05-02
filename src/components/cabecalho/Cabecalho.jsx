@@ -7,12 +7,14 @@ import logo from "../../../src/assets/images/logo.png";
 
 const Cabecalho = () => {
   const location = useLocation();
-
-  console.log(location.pathname);
+  const exibeNav =
+    location.pathname !== "/login" && location.pathname !== "/cadastroMembros"
+      ? true
+      : false;
 
   return (
     <Styles.Header>
-      {location.pathname !== "/login" ? (
+      {exibeNav ? (
         <>
           <Styles.Logo>
             <Link to="/">
