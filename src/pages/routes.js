@@ -8,6 +8,7 @@ import ListagemCategorias from "./cadastroCategorias/ListagemCategorias";
 import Page404 from "../pages/404/Page404";
 import DetalhesBrowserGame from "./detalhesBrowserGame/DetalhesBrowserGame";
 import CadastroMembros from "./cadastroMembros/CadastroMembros";
+import Login from "./login/Login";
 
 export default function GoodBrowserGamesRoutes() {
   return (
@@ -31,6 +32,8 @@ export default function GoodBrowserGamesRoutes() {
       <Route path="/detalhesGame/:id" element={<DetalhesBrowserGame />} />
 
       <Route path="/cadastroMembros" element={<CadastroMembros />} />
+
+      <Route path="/login" element={<Login />} />
 
       <Route path="*" element={<Page404 />} />
     </Routes>

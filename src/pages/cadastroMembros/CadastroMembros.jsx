@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { CircularProgress, FormControl } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 import axios from "../../api/api";
 import PageTitle from "../../components/pageTitle/PageTitle";
@@ -277,7 +277,7 @@ const CadastroMembros = (props) => {
             </Styles.FormControl>
 
             <Styles.ContainerButtons>
-              <Link to="/cadastroGames">
+              <Link to="/login">
                 <Styles.Button variant="outlined">Cancelar</Styles.Button>
               </Link>
 
