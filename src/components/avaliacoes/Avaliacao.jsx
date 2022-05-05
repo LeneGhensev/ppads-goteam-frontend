@@ -16,7 +16,6 @@ const Avaliacao = (props) => {
     "/" +
     dataCreatedAt.getFullYear();
 
-  console.log(dataDaAvaliacao);
   return (
     <Styles.ContainerAvaliacao>
       <Styles.Avaliacao>

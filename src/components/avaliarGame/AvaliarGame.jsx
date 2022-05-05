@@ -18,9 +18,6 @@ const AvaliarGame = (props) => {
       if (values.comentario === "") {
         errors.comentario = "Campo obrigatório";
       }
-      if (values.estrela === NaN) {
-        errors.estrela = "Campo obrigatório";
-      }
 
       return errors;
     },

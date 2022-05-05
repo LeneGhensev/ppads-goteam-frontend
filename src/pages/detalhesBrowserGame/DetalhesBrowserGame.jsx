@@ -23,6 +23,8 @@ const DetalhesBrowserGame = () => {
   const [showAvaliarGame, setShowAvaliarGame] = useState(false);
   const [avaliacaoParaEditar, setAvaliacaoParaEditar] = useState();
 
+  const [usuarioJaAvaliou, setUsuarioJaAvaliou] = useState();
+
   const mostraAvaliarGame = useCallback(() => {
     setAvaliacaoParaEditar();
     setShowAvaliarGame(!showAvaliarGame);
@@ -33,7 +35,7 @@ const DetalhesBrowserGame = () => {
       mostraAvaliarGame();
       setAvaliacaoParaEditar(avaliacao);
     },
-    [avaliacaoParaEditar, setAvaliacaoParaEditar]
+    [mostraAvaliarGame]
   );
 
   const getAvaliacoesDoGame = async () => {
@@ -88,6 +90,22 @@ const DetalhesBrowserGame = () => {
 
     getAvaliacoesDoGame();
   };
+
+  useEffect(() => {
+    const usuarioPodeAvaliar = () => {
+      const avaliou = avaliacoes.filter(
+        (avaliacao) => avaliacao.usuario.id === idUsuario
+      );
+
+      if (avaliou.length > 0) {
+        setUsuarioJaAvaliou(true);
+      } else {
+        setUsuarioJaAvaliou(false);
+      }
+    };
+
+    usuarioPodeAvaliar();
+  }, [avaliacoes]);
 
   useEffect(() => {
     const getGame = async () => {
@@ -152,7 +170,11 @@ const DetalhesBrowserGame = () => {
 
           {!showAvaliarGame ? (
             <Styles.ContainerBotaoAvaliarGame>
-              <Button variant="contained" onClick={mostraAvaliarGame}>
+              <Button
+                variant="contained"
+                onClick={mostraAvaliarGame}
+                disabled={usuarioJaAvaliou}
+              >
                 Avaliar
               </Button>
             </Styles.ContainerBotaoAvaliarGame>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
 import axios from "../../api/api";
@@ -10,6 +10,8 @@ import useValidateForm from "../../hooks/useValidateForm";
 import Styles from "./CadastroMembros.styles";
 
 const CadastroMembros = (props) => {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const id = props?.usuario?.id;
@@ -87,25 +89,41 @@ const CadastroMembros = (props) => {
   const handleSubmit = async () => {
     let values = { ...validateForm.values };
 
+    if (validateForm.values.data_de_nasc) {
+      const { data_de_nasc: dataNascimento } = validateForm.values;
+      const data_de_nasc = new Date(dataNascimento);
+
+      values = { ...values, data_de_nasc };
+      console.log(values);
+    }
+
     console.log(values);
 
     if (edicaoDeUsuario) {
+      setIsLoading(true);
+
       try {
         console.log(`put(/usuario/id/${id}, ${values}`);
-
         // await axios.put(`/usuario/id/${id}`, values);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
       }
     } else {
+      setIsLoading(true);
+
       try {
         console.log(`post(/usuario, ${values}`);
-
-        // await axios.post("/usuario", values);
+        await axios.post("/usuario", values);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log(error);
       }
     }
+
+    navigate("/login");
   };
 
   return (
