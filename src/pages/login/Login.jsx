@@ -1,16 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "../../api/api";
 
 // import logo from "../../../src/assets/images/logo.png";
 import PageTitle from "../../components/pageTitle/PageTitle";
 import TextField from "../../components/textfield/TextField";
+import { useUseContext } from "../../contexts/UserContext";
 import useValidateForm from "../../hooks/useValidateForm";
 
 import Styles from "./Login.styles";
 
 const Login = () => {
+  const { setToken } = useUseContext();
+  const navigate = useNavigate();
+
   const validateForm = useValidateForm({
     initialValues: {
       email: "",
@@ -31,18 +35,31 @@ const Login = () => {
     },
   });
 
-  const handleSubmit = async () => {
+  const onSubmit = async () => {
     let values = { ...validateForm.values };
 
     console.log(values);
 
     try {
-      console.log("GET/usuarios", values);
-      //   await axios.get("/usuarios", values);
-      //   await axios.get(`/usuarios/id/${id}`, values);
+      console.log("post/login", values);
+      const resp = await axios.post("/login", values);
+
+      console.log("(token)", resp.data.token);
+
+      if (resp.data.token) {
+        setToken(resp.data.token);
+
+        console.log("setToken(token)", resp.data.token);
+
+        axios.defaults.headers.common["x-access-token"] = resp.data.token;
+
+        return navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
+
+    console.log("login não funcionou");
   };
 
   return (
@@ -57,7 +74,7 @@ const Login = () => {
         <Styles.Form
           onSubmit={(event) => {
             event.preventDefault();
-            handleSubmit();
+            onSubmit();
           }}
         >
           <Styles.FormControl>

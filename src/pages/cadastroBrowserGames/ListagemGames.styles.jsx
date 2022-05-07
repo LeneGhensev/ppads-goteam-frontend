@@ -25,11 +25,9 @@ const StyledContainerCircularProgress = styled.div`
 
 const StyledContainerAddButton = styled.div`
   display: flex;
-  align-content: center;
   flex-direction: column;
   align-items: flex-end;
-  width: 100vw;
-  padding: 1rem 0;
+  width: 40%;
 
   a {
     text-decoration: none;
@@ -37,6 +35,22 @@ const StyledContainerAddButton = styled.div`
 
   button {
     margin-right: 12rem;
+  }
+`;
+
+const StyledContainerFiltroAddButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 2rem 0;
+  width: 100vw;
+
+  ${formControlRoot} {
+    margin-right: 2rem;
+  }
+
+  input {
+    width: 400px;
   }
 `;
 
@@ -56,7 +70,7 @@ const StyledContainerFiltro = styled.div`
   }
 `;
 
-const StyledContainerBotoesFiltro = styled.div`
+const StyledContainerBotaoLimparFiltros = styled.div`
   display: flex;
   min-width: 200px;
   justify-content: flex-end;
@@ -75,6 +89,7 @@ export default {
   ContainerGamesEmpty: StyledContainerGamesEmpty,
   ContainerCircularProgress: StyledContainerCircularProgress,
   ContainerAddButton: StyledContainerAddButton,
+  ContainerFiltroAddButton: StyledContainerFiltroAddButton,
   ContainerFiltro: StyledContainerFiltro,
-  ContainerBotoesFiltro: StyledContainerBotoesFiltro,
+  ContainerBotaoLimparFiltros: StyledContainerBotaoLimparFiltros,
 };

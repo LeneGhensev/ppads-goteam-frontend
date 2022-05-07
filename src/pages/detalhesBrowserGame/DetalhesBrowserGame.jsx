@@ -9,10 +9,11 @@ import Avaliacoes from "../../components/avaliacoes/Avaliacoes";
 import AvaliarGame from "../../components/avaliarGame/AvaliarGame";
 
 import Styles from "./DetalhesBrowserGame.styles";
+import { useUseContext } from "../../contexts/UserContext";
 
 const DetalhesBrowserGame = () => {
   const { id: idGame } = useParams();
-  const idUsuario = 1;
+  const { usuario } = useUseContext();
 
   const [game, setGame] = useState();
   const [isLoadingGame, setIsLoadingGame] = useState(false);
@@ -69,7 +70,7 @@ const DetalhesBrowserGame = () => {
       ...validateFormValues,
       estrela: Number(validateFormValues.estrela),
       id_game: Number(idGame),
-      id_usuario: idUsuario,
+      id_usuario: usuario.id,
     };
 
     const idAvaliacao = avaliacaoParaEditar?.id;
@@ -94,7 +95,7 @@ const DetalhesBrowserGame = () => {
   useEffect(() => {
     const usuarioPodeAvaliar = () => {
       const avaliou = avaliacoes.filter(
-        (avaliacao) => avaliacao.usuario.id === idUsuario
+        (avaliacao) => avaliacao.usuario.id === usuario.id
       );
 
       if (avaliou.length > 0) {
@@ -187,7 +188,7 @@ const DetalhesBrowserGame = () => {
           )}
 
           <Avaliacoes
-            usuarioLogado={idUsuario}
+            usuarioLogado={usuario.id}
             avaliacoes={avaliacoes}
             isLoadingAvaliacoes={isLoadingAvaliacoes}
             editarAvaliacao={editarAvaliacao}
