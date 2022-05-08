@@ -6,16 +6,18 @@ const UserContext = createContext({
   token: null,
   setToken: () => {},
   usuario: {},
+  usuarioLogado: null,
+  logout: () => {},
 });
 
 export const useUseContext = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
-  const [token, setToken] = useStorage("token");
+  const [token, setToken, removeUsuario] = useStorage("token");
   const [usuario, setUsuario] = useState({});
+  const [usuarioLogado, setUsuarioLogado] = useState(false);
 
-  console.log("userContex usuario", usuario);
-  console.log("userContex token", token);
+  console.log(usuarioLogado);
 
   const getDadosDoUsuario = async () => {
     try {
@@ -26,12 +28,24 @@ export const UserContextProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    axios.defaults.headers.common["x-access-token"] = null;
+    setUsuario({});
+    setUsuarioLogado(false);
+    removeUsuario();
+  };
+
   useEffect(() => {
-    getDadosDoUsuario();
+    if (token) {
+      getDadosDoUsuario();
+      setUsuarioLogado(true);
+    }
   }, [token]);
 
   return (
-    <UserContext.Provider value={{ token, setToken, usuario }}>
+    <UserContext.Provider
+      value={{ token, setToken, usuario, logout, usuarioLogado }}
+    >
       {children}
     </UserContext.Provider>
   );

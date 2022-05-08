@@ -11,7 +11,7 @@ import { useUseContext } from "../../contexts/UserContext";
 
 const Cabecalho = () => {
   const location = useLocation();
-  const { usuario } = useUseContext();
+  const { usuario, logout } = useUseContext();
 
   const exibeNav =
     location.pathname !== "/login" && location.pathname !== "/cadastroMembros"
@@ -49,7 +49,7 @@ const Cabecalho = () => {
             </Styles.Nav>
           </Styles.ContainerLogoMenu>
 
-          <Styles.Avatar>
+          <Styles.Avatar onClick={logout}>
             <Avatar
               alt={`Avatar do usuário ${usuario.username}`}
               src={usuario.avatar || avatarDefault}

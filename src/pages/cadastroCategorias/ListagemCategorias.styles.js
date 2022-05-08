@@ -30,8 +30,16 @@ const StyledContainerListCategorias = styled.div`
   padding-bottom: 2rem;
 `;
 
+const StyledContainerEmptyCategories = styled.div`
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  margin-top: 2rem;
+`;
+
 export default {
   ContainerBotaoNovaCategoria: StyledContainerBotaoNovaCategoria,
   ContainerCircularProgress: StyledContainerCircularProgress,
   ContainerListCategorias: StyledContainerListCategorias,
+  ContainerEmptyCategories: StyledContainerEmptyCategories,
 };

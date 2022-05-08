@@ -78,7 +78,9 @@ const ListagemCategorias = () => {
           />
 
           {!listCategorias ? (
-            <p>Não há Categorias cadastradas.</p>
+            <Styles.ContainerEmptyCategories>
+              <p>Nenhuma categoria foi encontrada :(</p>
+            </Styles.ContainerEmptyCategories>
           ) : (
             listCategorias?.map((categoria) => {
               return (
