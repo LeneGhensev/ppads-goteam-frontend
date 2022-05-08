@@ -1,4 +1,4 @@
-# Iniciando com o BoogBrowserGames
+# Iniciando com o GoodBrowserGames
 
 Este projeto foi criado com [Create React App](https://github.com/facebook/create-react-app).
 
