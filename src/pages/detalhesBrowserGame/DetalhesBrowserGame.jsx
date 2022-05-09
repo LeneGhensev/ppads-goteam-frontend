@@ -7,9 +7,9 @@ import axios from "../../api/api";
 import PageTitle from "../../components/pageTitle/PageTitle";
 import Avaliacoes from "../../components/avaliacoes/Avaliacoes";
 import AvaliarGame from "../../components/avaliarGame/AvaliarGame";
+import { useUseContext } from "../../contexts/UserContext";
 
 import Styles from "./DetalhesBrowserGame.styles";
-import { useUseContext } from "../../contexts/UserContext";
 
 const DetalhesBrowserGame = () => {
   const { id: idGame } = useParams();

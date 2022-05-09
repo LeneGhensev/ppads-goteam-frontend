@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import useStorage from "../utils/useStorage";
+
 import axios from "../api/api";
+import useStorage from "../utils/useStorage";
 
 const UserContext = createContext({
   token: null,
@@ -17,12 +18,15 @@ export const UserContextProvider = ({ children }) => {
   const [usuario, setUsuario] = useState({});
   const [usuarioLogado, setUsuarioLogado] = useState(false);
 
+  console.log(token);
+  console.log(usuario);
   console.log(usuarioLogado);
 
   const getDadosDoUsuario = async () => {
     try {
       const response = await axios.get("/usuario");
       setUsuario(response.data);
+      setUsuarioLogado(true);
     } catch (error) {
       console.log(error);
     }
@@ -37,6 +41,7 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
+      axios.defaults.headers.common["x-access-token"] = token;
       getDadosDoUsuario();
       setUsuarioLogado(true);
     }

@@ -22,9 +22,9 @@ const FormGames = (props) => {
   let tags = "";
   props?.game?.tags?.map((tag) => {
     if (tags === "") {
-      tags = tag.nome;
+      return (tags = tag.nome);
     } else {
-      tags = tags + ", " + tag.nome;
+      return (tags = tags + ", " + tag.nome);
     }
   });
 

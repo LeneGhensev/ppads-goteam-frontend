@@ -1,5 +1,11 @@
 # Iniciando com o GoodBrowserGames
 
+FrotEnd do projeto desenvolvido no curso de ADS
+
+## Escopo do produto
+
+O sistema desenvolvido foi denominado GoodBrowserGames. Ele permite que os membros da comunidade compartilhem informações e suas impressões sobre os browser games que já jogaram. O objetivo da aplicação criada é recomendar jogos a outras pessoas. Os browser games são jogos eletrônicos disponíveis na web que podem ser jogados no próprio navegador, sem a necessidade de instalar outros componentes.
+
 Este projeto foi criado com [Create React App](https://github.com/facebook/create-react-app).
 
 ## Scripts disponíveis

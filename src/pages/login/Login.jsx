@@ -38,19 +38,11 @@ const Login = () => {
   const onSubmit = async () => {
     let values = { ...validateForm.values };
 
-    console.log(values);
-
     try {
-      console.log("post/login", values);
       const resp = await axios.post("/login", values);
-
-      console.log("(token)", resp.data.token);
 
       if (resp.data.token) {
         setToken(resp.data.token);
-
-        console.log("setToken(token)", resp.data.token);
-
         axios.defaults.headers.common["x-access-token"] = resp.data.token;
 
         return navigate("/");
@@ -58,8 +50,6 @@ const Login = () => {
     } catch (error) {
       console.log(error);
     }
-
-    console.log("login não funcionou");
   };
 
   return (
