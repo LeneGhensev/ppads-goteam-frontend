@@ -13,7 +13,7 @@ const StyledContainerLogin = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 6rem;
+  padding-top: 10rem;
 `;
 
 const StyledContainerForm = styled.div`

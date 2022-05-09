@@ -2,19 +2,15 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Home from "../home/Home";
+import Login from "../login/Login";
 import ListagemGames from "../cadastroBrowserGames/ListagemGames";
 import CadastroGame from "../cadastroBrowserGames/CadastroGame";
 import ListagemCategorias from "../cadastroCategorias/ListagemCategorias";
 import Page404 from "../404/Page404";
 import DetalhesBrowserGame from "../detalhesBrowserGame/DetalhesBrowserGame";
 import CadastroMembros from "../cadastroMembros/CadastroMembros";
-import Login from "../login/Login";
-
-import { useUseContext } from "../../contexts/UserContext";
 
 export default function GoodBrowserGamesRoutes() {
-  const { token } = useUseContext();
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />

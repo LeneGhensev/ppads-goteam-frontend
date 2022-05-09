@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "../../api/api";
 
-// import logo from "../../../src/assets/images/logo.png";
-import PageTitle from "../../components/pageTitle/PageTitle";
-import TextField from "../../components/textfield/TextField";
 import { useUseContext } from "../../contexts/UserContext";
 import useValidateForm from "../../hooks/useValidateForm";
+import PageTitle from "../../components/pageTitle/PageTitle";
+import TextField from "../../components/textfield/TextField";
 
+import logo from "../../../src/assets/images/logo.png";
 import Styles from "./Login.styles";
 
 const Login = () => {
@@ -66,9 +66,8 @@ const Login = () => {
     <Styles.ContainerLogin>
       <Styles.ContainerForm>
         <Styles.PageTitleLogo>
-          {/* <Styles.Logo src={logo} alt="Logo GoodBrowserGames" /> */}
-          {/* <PageTitle>GoodBrowserGames</PageTitle> */}
-          <PageTitle>Realize seu login</PageTitle>
+          <Styles.Logo src={logo} alt="Logo GoodBrowserGames" />
+          <PageTitle>GoodBrowserGames</PageTitle>
         </Styles.PageTitleLogo>
 
         <Styles.Form
