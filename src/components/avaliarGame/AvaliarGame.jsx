@@ -10,7 +10,7 @@ const AvaliarGame = (props) => {
   const validateForm = useValidateForm({
     initialValues: {
       comentario: props?.avaliacao?.comentario,
-      estrela: props?.avaliacao?.estrela || 0,
+      estrela: props?.avaliacao?.estrela || 1,
     },
     validate: function (values) {
       const errors = {};

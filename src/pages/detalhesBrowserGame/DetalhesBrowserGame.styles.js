@@ -60,6 +60,17 @@ const StyledContainerTags = styled.div`
   }
 `;
 
+const StyledMediaEstrelas = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 2rem 0 0;
+
+  p {
+    font-size: 16px;
+    margin: 0 1rem 0 0;
+  }
+`;
+
 const StyledContainerBotaoAvaliarGame = styled.form`
   margin: 3rem 5rem;
   border-radius: 8px;
@@ -77,6 +88,7 @@ export default {
   ContainerDetalhesGame: StyledContainerDetalhesGame,
   InformacoesGame: StyledInformacoesGame,
   Tags: StyledContainerTags,
+  MediaEstrelas: StyledMediaEstrelas,
   ContainerBotaoAvaliarGame: StyledContainerBotaoAvaliarGame,
   ContainerCircularProgress: StyledContainerCircularProgress,
 };

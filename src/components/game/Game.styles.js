@@ -9,7 +9,7 @@ const StyledContainerGame = styled.div`
 const StyledCard = styled.article`
   display: flex;
   width: 100vw;
-  padding: 1rem;
+  padding: 1rem 1rem 2rem 1rem;
   border-radius: 8px;
   background-color: rgba(63, 191, 155, 0.2);
 

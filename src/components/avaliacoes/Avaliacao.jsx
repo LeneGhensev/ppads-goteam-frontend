@@ -26,7 +26,6 @@ const Avaliacao = (props) => {
 
           <Rating
             name="estrela"
-            defaultValue={1}
             value={props.avaliacao?.estrela}
             size="small"
             readOnly

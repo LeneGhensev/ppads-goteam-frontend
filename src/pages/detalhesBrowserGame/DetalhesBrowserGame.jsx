@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
-import { Button } from "@mui/material";
+import { Button, Rating } from "@mui/material";
 
 import axios from "../../api/api";
 import PageTitle from "../../components/pageTitle/PageTitle";
@@ -63,6 +63,19 @@ const DetalhesBrowserGame = () => {
     }
   };
 
+  const getGame = async () => {
+    setIsLoadingGame(true);
+
+    try {
+      const response = await axios.get(`/game/id/${idGame}`);
+      setGame(response.data);
+      setIsLoadingGame(false);
+    } catch (error) {
+      setIsLoadingGame(false);
+      console.log(error);
+    }
+  };
+
   const handleSubmitAvaliacao = async (validateFormValues) => {
     mostraAvaliarGame();
 
@@ -89,6 +102,7 @@ const DetalhesBrowserGame = () => {
       }
     }
 
+    getGame();
     getAvaliacoesDoGame();
   };
 
@@ -109,19 +123,6 @@ const DetalhesBrowserGame = () => {
   }, [avaliacoes]);
 
   useEffect(() => {
-    const getGame = async () => {
-      setIsLoadingGame(true);
-
-      try {
-        const response = await axios.get(`/game/id/${idGame}`);
-        setGame(response.data);
-        setIsLoadingGame(false);
-      } catch (error) {
-        setIsLoadingGame(false);
-        console.log(error);
-      }
-    };
-
     if (idGame) {
       getGame();
       getAvaliacoesDoGame();
@@ -166,6 +167,18 @@ const DetalhesBrowserGame = () => {
                   <div key={index}>{element.nome}</div>
                 ))}
               </Styles.Tags>
+
+              {game?.estrelas && (
+                <Styles.MediaEstrelas>
+                  <p>Média de estrelas: </p>
+                  <Rating
+                    name="estrelas"
+                    value={game?.estrelas}
+                    size="medium"
+                    readOnly
+                  />
+                </Styles.MediaEstrelas>
+              )}
             </div>
           </Styles.InformacoesGame>
 

@@ -17,7 +17,10 @@ export default function GoodBrowserGamesRoutes() {
   return (
     <Routes>
       {!usuarioLogado ? (
-        <Route path="/login" element={<Login />} />
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastroMembros" element={<CadastroMembros />} />
+        </>
       ) : (
         <>
           <Route path="/" element={<Home />} />
@@ -40,8 +43,6 @@ export default function GoodBrowserGamesRoutes() {
           />
 
           <Route path="/detalhesGame/:id" element={<DetalhesBrowserGame />} />
-
-          <Route path="/cadastroMembros" element={<CadastroMembros />} />
         </>
       )}
 
