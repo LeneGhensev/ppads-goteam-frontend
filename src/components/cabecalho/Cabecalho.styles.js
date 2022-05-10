@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 const StyledHeader = styled.header`
   display: flex;
+  justify-content: space-between;
+  width: 100vw;
   height: 6rem;
   margin-bottom: 2rem;
   background: #f2f2f2;
@@ -45,6 +47,10 @@ const StyledUl = styled.ul`
   padding: 1rem;
 `;
 
+const StyledContainerLogoMenu = styled.div`
+  display: flex;
+`;
+
 const StyledLi = styled.li`
   padding: 0 1rem;
 
@@ -56,10 +62,18 @@ const StyledLi = styled.li`
   }
 `;
 
+const StyledContainerAvatar = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+`;
+
 export default {
   Header: StyledHeader,
   Logo: StyledLogo,
   Nav: StyledNav,
   Ul: StyledUl,
   Li: StyledLi,
+  ContainerLogoMenu: StyledContainerLogoMenu,
+  Avatar: StyledContainerAvatar,
 };

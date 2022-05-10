@@ -10,16 +10,13 @@ const AvaliarGame = (props) => {
   const validateForm = useValidateForm({
     initialValues: {
       comentario: props?.avaliacao?.comentario,
-      estrela: props?.avaliacao?.estrela || 0,
+      estrela: props?.avaliacao?.estrela || 1,
     },
     validate: function (values) {
       const errors = {};
 
       if (values.comentario === "") {
         errors.comentario = "Campo obrigatório";
-      }
-      if (values.estrela === NaN) {
-        errors.estrela = "Campo obrigatório";
       }
 
       return errors;
@@ -56,6 +53,7 @@ const AvaliarGame = (props) => {
           validateForm.touched.comentario && validateForm.errors.comentario
         }
         fullWidth
+        sx={{ marginTop: "1rem" }}
       />
 
       <Styles.ContainerButtons>

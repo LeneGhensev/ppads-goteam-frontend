@@ -6,8 +6,6 @@ const textFieldRoot = `.${textFieldClasses.root}`;
 
 const StyledTextField = styled(TextField)`
   &${textFieldRoot} {
-    margin-top: 2rem;
-
     &:first-child {
       margin-top: 0;
     }

@@ -7,4 +7,13 @@ const StyledContainerCircularProgress = styled.div`
   align-items: center;
 `;
 
-export default { ContainerCircularProgress: StyledContainerCircularProgress };
+const StyledContainerForm = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+`;
+
+export default {
+  ContainerCircularProgress: StyledContainerCircularProgress,
+  ContainerForm: StyledContainerForm,
+};

@@ -11,7 +11,7 @@ const StyledCard = styled.article`
   justify-content: space-between;
   border-radius: 8px;
   width: 100vw;
-  padding: 1rem;
+  padding: 1rem 1rem 2rem 1rem;
   background-color: rgba(63, 191, 155, 0.2);
 
   :hover {

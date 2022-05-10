@@ -7,14 +7,42 @@ const buttonRoot = `.${buttonClasses.root}`;
 const formControlRoot = `.${formControlClasses.root}`;
 const inputLabelRoot = `.${inputLabelClasses.root}`;
 
-const StyledContainer = styled.div`
+const StyledContainerLogin = styled.div`
   width: auto;
-  padding: 0 18rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10rem;
+`;
+
+const StyledContainerForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem;
+  border-radius: 12px;
+  background: #f2f2f2;
+  box-shadow: 1px 1px 8px 1px #bfbd9f;
+`;
+
+const StyledContainerPageTitleLogo = styled.div`
+  display: flex;
+  width: auto;
+  align-items: center;
+`;
+
+const StyledLogo = styled.img`
+  width: 6rem;
+  height: 6rem;
+  padding: 1rem 1rem 1rem 0;
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin: 2rem;
 `;
 
 const StyledContainerButtons = styled.div`
@@ -24,15 +52,6 @@ const StyledContainerButtons = styled.div`
 
   a {
     text-decoration: none;
-  }
-`;
-
-const StyledContainerImagemIlustrativa = styled.div`
-  padding: 1rem 0 0;
-
-  p {
-    font-size: 14px;
-    margin: 0.5rem 0;
   }
 `;
 
@@ -50,7 +69,7 @@ const StyledInputLabel = styled(InputLabel)`
 
 const StyledButton = styled(Button)`
   &${buttonRoot} {
-    width: 20rem;
+    width: 12rem;
 
     :first-child {
       margin-right: 2rem;
@@ -59,11 +78,13 @@ const StyledButton = styled(Button)`
 `;
 
 export default {
-  Container: StyledContainer,
+  ContainerLogin: StyledContainerLogin,
+  ContainerForm: StyledContainerForm,
+  PageTitleLogo: StyledContainerPageTitleLogo,
+  Logo: StyledLogo,
   Form: StyledForm,
   FormControl: StyledFormControl,
   InputLabel: StyledInputLabel,
   ContainerButtons: StyledContainerButtons,
   Button: StyledButton,
-  ContainerImagemIlustrativa: StyledContainerImagemIlustrativa,
 };

@@ -22,9 +22,9 @@ const FormGames = (props) => {
   let tags = "";
   props?.game?.tags?.map((tag) => {
     if (tags === "") {
-      tags = tag.nome;
+      return (tags = tag.nome);
     } else {
-      tags = tags + ", " + tag.nome;
+      return (tags = tags + ", " + tag.nome);
     }
   });
 
@@ -134,17 +134,20 @@ const FormGames = (props) => {
             handleSubmit();
           }}
         >
-          <TextField
-            required
-            type="text"
-            name="nome"
-            label="Nome"
-            value={validateForm.values?.nome}
-            helperText={validateForm.touched.nome && validateForm.errors.nome}
-            onChange={validateForm.handleChange}
-            onBlur={validateForm.handleBlur}
-            fullWidth
-          />
+          <Styles.FormControl>
+            <Styles.InputLabel htmlFor="nome">Nome *</Styles.InputLabel>
+            <TextField
+              required
+              type="text"
+              id="nome"
+              name="nome"
+              value={validateForm.values?.nome}
+              helperText={validateForm.touched.nome && validateForm.errors.nome}
+              onChange={validateForm.handleChange}
+              onBlur={validateForm.handleBlur}
+              fullWidth
+            />
+          </Styles.FormControl>
 
           {validateForm.values?.imagem_ilustrativa ? (
             <Styles.ContainerImagemIlustrativa>
@@ -157,33 +160,43 @@ const FormGames = (props) => {
               <p>Clique na imagem para alterar</p>
             </Styles.ContainerImagemIlustrativa>
           ) : (
-            <TextField
-              type="file"
-              accept="image/*"
-              name="imagem_ilustrativa"
-              label="URL da imagem ilustrativa do game"
-              value={validateForm.values?.imagem_ilustrativa}
-              onChange={(event) => uploadImagemIlustrativa(event)}
-              onBlur={validateForm.handleBlur}
-              fullWidth
-            />
+            <Styles.FormControl>
+              <Styles.InputLabel htmlFor="imagem_ilustrativa">
+                URL da imagem ilustrativa do game
+              </Styles.InputLabel>
+              <TextField
+                type="file"
+                accept="image/*"
+                id="imagem_ilustrativa"
+                name="imagem_ilustrativa"
+                value={validateForm.values?.imagem_ilustrativa}
+                onChange={(event) => uploadImagemIlustrativa(event)}
+                onBlur={validateForm.handleBlur}
+                fullWidth
+              />
+            </Styles.FormControl>
           )}
 
-          <TextField
-            required
-            type="text"
-            name="descricao"
-            label="Descrição"
-            multiline
-            rows={4}
-            value={validateForm.values?.descricao}
-            onChange={validateForm.handleChange}
-            onBlur={validateForm.handleBlur}
-            helperText={
-              validateForm.touched.descricao && validateForm.errors.descricao
-            }
-            fullWidth
-          />
+          <Styles.FormControl>
+            <Styles.InputLabel htmlFor="descricao">
+              Descrição *
+            </Styles.InputLabel>
+            <TextField
+              required
+              type="text"
+              id="descricao"
+              name="descricao"
+              multiline
+              rows={4}
+              value={validateForm.values?.descricao}
+              onChange={validateForm.handleChange}
+              onBlur={validateForm.handleBlur}
+              helperText={
+                validateForm.touched.descricao && validateForm.errors.descricao
+              }
+              fullWidth
+            />
+          </Styles.FormControl>
 
           <Select
             required
@@ -204,39 +217,55 @@ const FormGames = (props) => {
             {categories}
           </Select>
 
-          <TextField
-            required
-            type="text"
-            name="url_acesso"
-            label="URL de acesso"
-            value={validateForm.values?.url_acesso}
-            onChange={validateForm.handleChange}
-            onBlur={validateForm.handleBlur}
-            helperText={
-              validateForm.touched.url_acesso && validateForm.errors.url_acesso
-            }
-            fullWidth
-          />
+          <Styles.FormControl>
+            <Styles.InputLabel htmlFor="url_acesso">
+              URL de acesso *
+            </Styles.InputLabel>
+            <TextField
+              required
+              type="text"
+              id="url_acesso"
+              name="url_acesso"
+              value={validateForm.values?.url_acesso}
+              onChange={validateForm.handleChange}
+              onBlur={validateForm.handleBlur}
+              helperText={
+                validateForm.touched.url_acesso &&
+                validateForm.errors.url_acesso
+              }
+              fullWidth
+            />
+          </Styles.FormControl>
 
-          <TextField
-            type="text"
-            name="url_video"
-            label="URL do vídeo"
-            value={validateForm.values?.url_video}
-            onChange={validateForm.handleChange}
-            onBlur={validateForm.handleBlur}
-            fullWidth
-          />
+          <Styles.FormControl>
+            <Styles.InputLabel htmlFor="url_video">
+              URL do vídeo
+            </Styles.InputLabel>
+            <TextField
+              type="text"
+              id="url_video"
+              name="url_video"
+              value={validateForm.values?.url_video}
+              onChange={validateForm.handleChange}
+              onBlur={validateForm.handleBlur}
+              fullWidth
+            />
+          </Styles.FormControl>
 
-          <Styles.TextField
-            type="text"
-            name="tags"
-            label="Tags de classificação"
-            value={validateForm.values?.tags}
-            onChange={validateForm.handleChange}
-            onBlur={validateForm.handleBlur}
-            fullWidth
-          />
+          <Styles.FormControl>
+            <Styles.InputLabel htmlFor="tags">
+              Tags de classificação
+            </Styles.InputLabel>
+            <TextField
+              type="text"
+              id="tags"
+              name="tags"
+              value={validateForm.values?.tags}
+              onChange={validateForm.handleChange}
+              onBlur={validateForm.handleBlur}
+              fullWidth
+            />
+          </Styles.FormControl>
 
           <Styles.ContainerButtons>
             <Link to="/cadastroGames">

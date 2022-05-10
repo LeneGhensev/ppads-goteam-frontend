@@ -1,15 +1,24 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { useLocation } from "react-router";
+import { ThemeProvider } from "@mui/material/styles";
 
-import Routes from "./pages/routes";
+import { UserContextProvider } from "./contexts/UserContext";
+import Routes from "./pages/routes/routes";
 import Cabecalho from "./components/cabecalho/Cabecalho";
 
+import theme from "./theme/theme";
+
 function App() {
+  const location = useLocation();
+
   return (
-    <Router>
-      <Cabecalho />
-      <Routes />
-    </Router>
+    <UserContextProvider>
+      <ThemeProvider theme={theme}>
+        {location.pathname !== "/login" && <Cabecalho />}
+
+        <Routes />
+      </ThemeProvider>
+    </UserContextProvider>
   );
 }
 

@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
-import { Button } from "@mui/material";
+import { Button, Rating } from "@mui/material";
 
 import axios from "../../api/api";
 import PageTitle from "../../components/pageTitle/PageTitle";
 import Avaliacoes from "../../components/avaliacoes/Avaliacoes";
 import AvaliarGame from "../../components/avaliarGame/AvaliarGame";
+import { useUseContext } from "../../contexts/UserContext";
 
 import Styles from "./DetalhesBrowserGame.styles";
 
 const DetalhesBrowserGame = () => {
   const { id: idGame } = useParams();
-  const idUsuario = 1;
+  const { usuario } = useUseContext();
 
   const [game, setGame] = useState();
   const [isLoadingGame, setIsLoadingGame] = useState(false);
@@ -22,6 +23,8 @@ const DetalhesBrowserGame = () => {
 
   const [showAvaliarGame, setShowAvaliarGame] = useState(false);
   const [avaliacaoParaEditar, setAvaliacaoParaEditar] = useState();
+
+  const [usuarioJaAvaliou, setUsuarioJaAvaliou] = useState();
 
   const mostraAvaliarGame = useCallback(() => {
     setAvaliacaoParaEditar();
@@ -33,7 +36,7 @@ const DetalhesBrowserGame = () => {
       mostraAvaliarGame();
       setAvaliacaoParaEditar(avaliacao);
     },
-    [avaliacaoParaEditar, setAvaliacaoParaEditar]
+    [mostraAvaliarGame]
   );
 
   const getAvaliacoesDoGame = async () => {
@@ -60,6 +63,19 @@ const DetalhesBrowserGame = () => {
     }
   };
 
+  const getGame = async () => {
+    setIsLoadingGame(true);
+
+    try {
+      const response = await axios.get(`/game/id/${idGame}`);
+      setGame(response.data);
+      setIsLoadingGame(false);
+    } catch (error) {
+      setIsLoadingGame(false);
+      console.log(error);
+    }
+  };
+
   const handleSubmitAvaliacao = async (validateFormValues) => {
     mostraAvaliarGame();
 
@@ -67,7 +83,7 @@ const DetalhesBrowserGame = () => {
       ...validateFormValues,
       estrela: Number(validateFormValues.estrela),
       id_game: Number(idGame),
-      id_usuario: idUsuario,
+      id_usuario: usuario.id,
     };
 
     const idAvaliacao = avaliacaoParaEditar?.id;
@@ -86,23 +102,27 @@ const DetalhesBrowserGame = () => {
       }
     }
 
+    getGame();
     getAvaliacoesDoGame();
   };
 
   useEffect(() => {
-    const getGame = async () => {
-      setIsLoadingGame(true);
+    const usuarioPodeAvaliar = () => {
+      const avaliou = avaliacoes.filter(
+        (avaliacao) => avaliacao.usuario.id === usuario.id
+      );
 
-      try {
-        const response = await axios.get(`/game/id/${idGame}`);
-        setGame(response.data);
-        setIsLoadingGame(false);
-      } catch (error) {
-        setIsLoadingGame(false);
-        console.log(error);
+      if (avaliou.length > 0) {
+        setUsuarioJaAvaliou(true);
+      } else {
+        setUsuarioJaAvaliou(false);
       }
     };
 
+    usuarioPodeAvaliar();
+  }, [avaliacoes]);
+
+  useEffect(() => {
     if (idGame) {
       getGame();
       getAvaliacoesDoGame();
@@ -147,12 +167,28 @@ const DetalhesBrowserGame = () => {
                   <div key={index}>{element.nome}</div>
                 ))}
               </Styles.Tags>
+
+              {game?.estrelas && (
+                <Styles.MediaEstrelas>
+                  <p>Média de estrelas: </p>
+                  <Rating
+                    name="estrelas"
+                    value={game?.estrelas}
+                    size="medium"
+                    readOnly
+                  />
+                </Styles.MediaEstrelas>
+              )}
             </div>
           </Styles.InformacoesGame>
 
           {!showAvaliarGame ? (
             <Styles.ContainerBotaoAvaliarGame>
-              <Button variant="contained" onClick={mostraAvaliarGame}>
+              <Button
+                variant="contained"
+                onClick={mostraAvaliarGame}
+                disabled={usuarioJaAvaliou}
+              >
                 Avaliar
               </Button>
             </Styles.ContainerBotaoAvaliarGame>
@@ -165,7 +201,7 @@ const DetalhesBrowserGame = () => {
           )}
 
           <Avaliacoes
-            usuarioLogado={idUsuario}
+            usuarioLogado={usuario.id}
             avaliacoes={avaliacoes}
             isLoadingAvaliacoes={isLoadingAvaliacoes}
             editarAvaliacao={editarAvaliacao}

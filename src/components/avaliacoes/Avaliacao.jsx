@@ -16,7 +16,6 @@ const Avaliacao = (props) => {
     "/" +
     dataCreatedAt.getFullYear();
 
-  console.log(dataDaAvaliacao);
   return (
     <Styles.ContainerAvaliacao>
       <Styles.Avaliacao>
@@ -27,7 +26,6 @@ const Avaliacao = (props) => {
 
           <Rating
             name="estrela"
-            defaultValue={1}
             value={props.avaliacao?.estrela}
             size="small"
             readOnly

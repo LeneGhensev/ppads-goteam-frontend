@@ -6,6 +6,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import defaultImage from "../../assets/images/urso.png";
 
 import Styles from "./Game.styles";
+import { useUseContext } from "../../contexts/UserContext";
 
 const Game = (props) => {
   const {
@@ -18,6 +19,9 @@ const Game = (props) => {
     tags,
     categoria,
   } = props.game;
+
+  const { usuario } = useUseContext();
+  const perfilAdmin = usuario.admin === true ? true : false;
 
   return (
     <Styles.ContainerGame>
@@ -66,18 +70,20 @@ const Game = (props) => {
           </Styles.ContainerBrowserGameInfo>
         </Link>
 
-        <Styles.ContainerButtons>
-          <Link to={`/cadastroGames/editarGame/${id}`}>
-            <Button startIcon={<ModeEditIcon />}>Editar</Button>
-          </Link>
+        {perfilAdmin && (
+          <Styles.ContainerButtons>
+            <Link to={`/cadastroGames/editarGame/${id}`}>
+              <Button startIcon={<ModeEditIcon />}>Editar</Button>
+            </Link>
 
-          <Button
-            startIcon={<DeleteIcon />}
-            onClick={() => props.deleteGame(id)}
-          >
-            Apagar
-          </Button>
-        </Styles.ContainerButtons>
+            <Button
+              startIcon={<DeleteIcon />}
+              onClick={() => props.deleteGame(id)}
+            >
+              Apagar
+            </Button>
+          </Styles.ContainerButtons>
+        )}
       </Styles.Card>
     </Styles.ContainerGame>
   );

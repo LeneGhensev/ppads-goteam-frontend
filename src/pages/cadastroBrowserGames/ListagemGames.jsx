@@ -10,8 +10,11 @@ import Select from "../../components/select/Select";
 import TextField from "../../components/textfield/TextField";
 
 import Styles from "./ListagemGames.styles";
+import { useUseContext } from "../../contexts/UserContext";
 
 const ListagemGames = () => {
+  const { usuario } = useUseContext();
+
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [allGames, setAllGames] = useState([]);
@@ -19,6 +22,7 @@ const ListagemGames = () => {
   const [gamesFiltrados, setGamesFiltrados] = useState(allGames);
 
   const games = !!filtros ? gamesFiltrados : allGames;
+  const perfilAdmin = usuario.admin === true ? true : false;
 
   const getAllGames = async () => {
     setIsLoading(true);
@@ -113,45 +117,51 @@ const ListagemGames = () => {
         </Styles.ContainerCircularProgress>
       ) : (
         <div>
-          <Styles.ContainerFiltro>
-            <TextField
-              type="text"
-              name="nome"
-              label="Nome"
-              value={filtros?.nome || ""}
-              handleChangeFiltros
-              onChange={handleChangeFiltros}
-            />
+          <Styles.ContainerFiltroAddButton>
+            <Styles.ContainerFiltro>
+              <TextField
+                type="text"
+                name="nome"
+                label="Nome"
+                value={filtros?.nome || ""}
+                handleChangeFiltros
+                onChange={handleChangeFiltros}
+              />
 
-            <Select
-              id="categoria"
-              name="id_categoria"
-              label="Categoria"
-              labelId="categoria"
-              value={filtros?.id_categoria || ""}
-              sx={{ minWidth: 400 }}
-              onChange={handleChangeFiltros}
-            >
-              {categories}
-            </Select>
+              <Select
+                id="categoria"
+                name="id_categoria"
+                label="Categoria"
+                labelId="categoria"
+                value={filtros?.id_categoria || ""}
+                sx={{ minWidth: 400 }}
+                onChange={handleChangeFiltros}
+              >
+                {categories}
+              </Select>
 
-            <Styles.ContainerBotoesFiltro>
-              {(filtros?.nome || filtros?.id_categoria) && (
-                <Button variant="outlined" onClick={limparFiltros}>
-                  Limpar Filtros
-                </Button>
-              )}
-            </Styles.ContainerBotoesFiltro>
-          </Styles.ContainerFiltro>
+              <Styles.ContainerBotaoLimparFiltros>
+                {(filtros?.nome || filtros?.id_categoria) && (
+                  <Button variant="outlined" onClick={limparFiltros}>
+                    Limpar Filtros
+                  </Button>
+                )}
+              </Styles.ContainerBotaoLimparFiltros>
+            </Styles.ContainerFiltro>
 
-          <Styles.ContainerAddButton>
-            <Link to="/cadastroGames/novoGame">
-              <Button variant="contained">Novo Game</Button>
-            </Link>
-          </Styles.ContainerAddButton>
+            {perfilAdmin && (
+              <Styles.ContainerAddButton>
+                <Link to="/cadastroGames/novoGame">
+                  <Button variant="contained">Novo Game</Button>
+                </Link>
+              </Styles.ContainerAddButton>
+            )}
+          </Styles.ContainerFiltroAddButton>
 
           {games.length === 0 ? (
-            <p>Não há Games cadastrados.</p>
+            <Styles.ContainerGamesEmpty>
+              <p>Nenhum game foi encontrado :(</p>
+            </Styles.ContainerGamesEmpty>
           ) : (
             games.map((game) => {
               return <Game key={game.id} game={game} deleteGame={deleteGame} />;
