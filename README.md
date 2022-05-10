@@ -1,6 +1,6 @@
 # Iniciando com o GoodBrowserGames
 
-FrotEnd do projeto desenvolvido no curso de ADS
+Frontnd do projeto desenvolvido no curso de ADS
 
 ## Escopo do produto
 
