@@ -40,6 +40,7 @@ const StyledInformacoesGame = styled.div`
   img {
     margin-right: 2rem;
     min-width: 350px;
+    max-height: 250px;
     border-radius: 8px;
   }
 
