@@ -7,6 +7,9 @@ const theme = createTheme({
       contrastText: "#FFFFFF",
     },
   },
+  typography: {
+    fontFamily: ["Open-Sans", "sans-serif"].join(", "),
+  },
   components: {
     MuiButton: {
       styleOverrides: {

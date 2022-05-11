@@ -6,11 +6,33 @@ const StyledContainerDetalhesGame = styled.div`
   padding-bottom: 2rem;
 `;
 
+const StyledContainerInfoAvaliacoesRecomendacoes = styled.div`
+  display: flex;
+
+  a {
+    text-decoration: none;
+  }
+`;
+
+const StyledContainerInfoAvaliacoes = styled.div`
+  width: 80%;
+`;
+
+const StyledGamesRecomendados = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  padding: 2rem;
+  border-radius: 8px;
+  margin: 3rem 3rem 3rem 1.5rem;
+  background: rgba(63, 191, 155, 0.2);
+`;
+
 const StyledInformacoesGame = styled.div`
   display: flex;
   background-color: rgba(63, 191, 155, 0.2);
   padding: 3rem;
-  margin: 3rem 5rem;
+  margin: 3rem 1.5rem 3rem 5rem;
   border-radius: 8px;
   text-align: justify;
   font-size: 18px;
@@ -72,7 +94,7 @@ const StyledMediaEstrelas = styled.div`
 `;
 
 const StyledContainerBotaoAvaliarGame = styled.form`
-  margin: 3rem 5rem;
+  margin: 3rem 1.5rem 3rem 5rem;
   border-radius: 8px;
   text-align: end;
 `;
@@ -86,6 +108,9 @@ const StyledContainerCircularProgress = styled.div`
 
 export default {
   ContainerDetalhesGame: StyledContainerDetalhesGame,
+  ContainerInfoAvaliacoesRecomendacoes: StyledContainerInfoAvaliacoesRecomendacoes,
+  ContainerInfoAvaliacoes: StyledContainerInfoAvaliacoes,
+  GamesRecomendados: StyledGamesRecomendados,
   InformacoesGame: StyledInformacoesGame,
   Tags: StyledContainerTags,
   MediaEstrelas: StyledMediaEstrelas,

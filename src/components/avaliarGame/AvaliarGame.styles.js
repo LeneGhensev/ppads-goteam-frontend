@@ -6,7 +6,7 @@ const buttonRoot = `.${buttonClasses.root}`;
 const StyledAvaliarGame = styled.form`
   /* background-color: #f2f2f2; */
   padding: 1rem;
-  margin: 3rem 5rem;
+  margin: 3rem 1.5rem 3rem 5rem;
   border-radius: 8px;
 `;
 
