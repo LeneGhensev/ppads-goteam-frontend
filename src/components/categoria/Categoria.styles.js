@@ -11,8 +11,9 @@ const StyledCard = styled.article`
   justify-content: space-between;
   border-radius: 8px;
   width: 100vw;
-  padding: 1rem;
-  background-color: #d6e3f3;
+  padding: 1rem 1rem 2rem 1rem;
+  background-color: rgba(63, 191, 155, 0.2);
+
   :hover {
     box-shadow: 2px 2px 8px 2px #f0ebeb;
   }
@@ -25,12 +26,14 @@ const StyledTituloCategoria = styled.h3`
 const StyledContainerBotoes = styled.div`
   display: flex;
   margin-left: 1rem;
+
   a {
     text-decoration: none;
     margin-right: 1rem;
   }
+
   button:first-child {
-    color: #ff7300;
+    color: #eb6003;
   }
 `;
 

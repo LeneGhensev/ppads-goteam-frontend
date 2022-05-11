@@ -8,10 +8,18 @@ const StyledContainerGame = styled.div`
 
 const StyledCard = styled.article`
   display: flex;
-  border-radius: 8px;
   width: 100vw;
-  padding: 1rem;
-  background-color: #d6e3f3;
+  padding: 1rem 1rem 2rem 1rem;
+  border-radius: 8px;
+  background-color: rgba(63, 191, 155, 0.2);
+
+  a {
+    text-decoration: none;
+    color: black;
+
+    display: flex;
+    width: 100%;
+  }
 
   :hover {
     box-shadow: 2px 2px 8px 2px #f0ebeb;
@@ -19,12 +27,17 @@ const StyledCard = styled.article`
 `;
 
 const StyledImagemIlustrativa = styled.div`
+  text-align: center;
   margin-right: 1rem;
-  max-width: 180px;
-  max-height: 120px;
+  min-width: 180px;
+  min-height: 120px;
 
   img {
     border-radius: 8px;
+    max-width: 180px;
+    min-width: 180px;
+    max-height: 110px;
+    min-height: 110px;
   }
 `;
 
@@ -59,7 +72,7 @@ const StyledGameUrl = styled.a`
   }
 
   :hover {
-    color: blue;
+    color: #72726e;
   }
 `;
 
@@ -68,7 +81,7 @@ const StyledContainerTags = styled.div`
   margin: 1rem 0 0;
 
   div {
-    background-color: #8ecef3;
+    background-color: rgba(63, 191, 155, 0.4);
     border-radius: 8px;
     padding: 0.5rem 0.8rem;
     margin: 0 0.5rem;
@@ -91,6 +104,10 @@ const StyledContainerButtons = styled.div`
   a {
     text-decoration: none;
     margin-bottom: 1rem;
+  }
+
+  button:first-child {
+    color: #eb6003;
   }
 `;
 

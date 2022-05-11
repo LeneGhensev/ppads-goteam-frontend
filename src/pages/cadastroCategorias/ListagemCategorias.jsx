@@ -50,7 +50,7 @@ const ListagemCategorias = () => {
   }, [inicioListagemCategorias]);
 
   return (
-    <div>
+    <Styles.ContainerListCategorias>
       <PageTitle>Categorias</PageTitle>
 
       {isLoading ? (
@@ -61,7 +61,7 @@ const ListagemCategorias = () => {
         <div>
           {inicioListagemCategorias && (
             <Styles.ContainerBotaoNovaCategoria>
-              <Link to="/cadastroCategorias/novaCategoria">
+              <Link to="/categorias/novaCategoria">
                 <Button
                   variant="contained"
                   onClick={() => setInicioListagemCategorias(false)}
@@ -78,7 +78,9 @@ const ListagemCategorias = () => {
           />
 
           {!listCategorias ? (
-            <p>Não há Categorias cadastradas.</p>
+            <Styles.ContainerEmptyCategories>
+              <p>Nenhuma categoria foi encontrada :(</p>
+            </Styles.ContainerEmptyCategories>
           ) : (
             listCategorias?.map((categoria) => {
               return (
@@ -93,7 +95,7 @@ const ListagemCategorias = () => {
           )}
         </div>
       )}
-    </div>
+    </Styles.ContainerListCategorias>
   );
 };
 
