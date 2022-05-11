@@ -35,7 +35,9 @@ const StyledImagemIlustrativa = styled.div`
   img {
     border-radius: 8px;
     max-width: 180px;
-    max-height: 117px;
+    min-width: 180px;
+    max-height: 110px;
+    min-height: 110px;
   }
 `;
 
