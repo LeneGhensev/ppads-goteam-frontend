@@ -16,7 +16,7 @@ const Categoria = (props) => {
         <Styles.Titulo>{nome}</Styles.Titulo>
 
         <Styles.ContainerBotoes>
-          <Link to={`/cadastroCategorias/editarCategoria/${id}`}>
+          <Link to={`/categorias/editarCategoria/${id}`}>
             <Button
               startIcon={<ModeEditIcon />}
               onClick={() => props.setInicioListagemCategorias(false)}

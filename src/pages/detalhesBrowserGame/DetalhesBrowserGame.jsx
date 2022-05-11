@@ -7,6 +7,7 @@ import axios from "../../api/api";
 import PageTitle from "../../components/pageTitle/PageTitle";
 import Avaliacoes from "../../components/avaliacoes/Avaliacoes";
 import AvaliarGame from "../../components/avaliarGame/AvaliarGame";
+import Card from "../../components/card/Card";
 import { useUseContext } from "../../contexts/UserContext";
 
 import Styles from "./DetalhesBrowserGame.styles";
@@ -17,6 +18,11 @@ const DetalhesBrowserGame = () => {
 
   const [game, setGame] = useState();
   const [isLoadingGame, setIsLoadingGame] = useState(false);
+
+  const [gamesRecomendados, setGamesRecomendados] = useState([]);
+  const [isLoadingGamesRecomendados, setIsLoadingGamesRecomendados] = useState(
+    false
+  );
 
   const [avaliacoes, setAvaliacoes] = useState([]);
   const [isLoadingAvaliacoes, setIsLoadingAvaliacoes] = useState(false);
@@ -38,6 +44,19 @@ const DetalhesBrowserGame = () => {
     },
     [mostraAvaliarGame]
   );
+
+  const getGamesRecomendados = async () => {
+    setIsLoadingGamesRecomendados(true);
+
+    try {
+      const response = await axios.get(`/game/recomenda/id/${idGame}`);
+      setGamesRecomendados(response.data);
+      setIsLoadingGamesRecomendados(false);
+    } catch (error) {
+      setIsLoadingGamesRecomendados(false);
+      console.log(error);
+    }
+  };
 
   const getAvaliacoesDoGame = async () => {
     setIsLoadingAvaliacoes(true);
@@ -126,6 +145,7 @@ const DetalhesBrowserGame = () => {
     if (idGame) {
       getGame();
       getAvaliacoesDoGame();
+      getGamesRecomendados();
     }
   }, [idGame]);
 
@@ -139,74 +159,93 @@ const DetalhesBrowserGame = () => {
         <div>
           <PageTitle>{game?.nome}</PageTitle>
 
-          <Styles.InformacoesGame>
-            <img
-              src={game?.imagem_ilustrativa}
-              alt="Imagem ilustrativa do Game"
-            />
+          <Styles.ContainerInfoAvaliacoesRecomendacoes>
+            <Styles.ContainerInfoAvaliacoes>
+              <Styles.InformacoesGame>
+                <img
+                  src={game?.imagem_ilustrativa}
+                  alt="Imagem ilustrativa do Game"
+                />
 
-            <div>
-              <p>{game?.descricao}</p>
+                <div>
+                  <p>{game?.descricao}</p>
 
-              <p>
-                <strong>Categoria:</strong> {game?.categoria?.nome}
-              </p>
+                  <p>
+                    <strong>Categoria:</strong> {game?.categoria?.nome}
+                  </p>
 
-              <a href={game?.url_acesso} target="_blank" rel="noreferrer">
-                <p>Jogue agora!</p>
-              </a>
+                  <a href={game?.url_acesso} target="_blank" rel="noreferrer">
+                    <p>Jogue agora!</p>
+                  </a>
 
-              {game?.url_video && (
-                <a href={game.url_video} target="_blank" rel="noreferrer">
-                  <p>Assista ao vídeo demonstrativo</p>
-                </a>
+                  {game?.url_video && (
+                    <a href={game.url_video} target="_blank" rel="noreferrer">
+                      <p>Assista ao vídeo demonstrativo</p>
+                    </a>
+                  )}
+
+                  <Styles.Tags>
+                    {game?.tags?.map((element, index) => (
+                      <div key={index}>{element.nome}</div>
+                    ))}
+                  </Styles.Tags>
+
+                  {game?.estrelas && (
+                    <Styles.MediaEstrelas>
+                      <p>Média de estrelas: </p>
+                      <Rating
+                        name="estrelas"
+                        value={game?.estrelas}
+                        size="medium"
+                        readOnly
+                      />
+                    </Styles.MediaEstrelas>
+                  )}
+                </div>
+              </Styles.InformacoesGame>
+
+              {!showAvaliarGame ? (
+                <Styles.ContainerBotaoAvaliarGame>
+                  <Button
+                    variant="contained"
+                    onClick={mostraAvaliarGame}
+                    disabled={usuarioJaAvaliou}
+                  >
+                    Avaliar
+                  </Button>
+                </Styles.ContainerBotaoAvaliarGame>
+              ) : (
+                <AvaliarGame
+                  avaliacao={avaliacaoParaEditar}
+                  handleSubmitAvaliacao={handleSubmitAvaliacao}
+                  mostraAvaliarGame={mostraAvaliarGame}
+                />
               )}
 
-              <Styles.Tags>
-                {game?.tags?.map((element, index) => (
-                  <div key={index}>{element.nome}</div>
-                ))}
-              </Styles.Tags>
+              <Avaliacoes
+                usuarioLogado={usuario.id}
+                avaliacoes={avaliacoes}
+                isLoadingAvaliacoes={isLoadingAvaliacoes}
+                editarAvaliacao={editarAvaliacao}
+                deleteAvaliacao={deleteAvaliacao}
+              />
+            </Styles.ContainerInfoAvaliacoes>
 
-              {game?.estrelas && (
-                <Styles.MediaEstrelas>
-                  <p>Média de estrelas: </p>
-                  <Rating
-                    name="estrelas"
-                    value={game?.estrelas}
-                    size="medium"
-                    readOnly
-                  />
-                </Styles.MediaEstrelas>
+            <Styles.GamesRecomendados>
+              {isLoadingGamesRecomendados ? (
+                <Styles.ContainerCircularProgress>
+                  <CircularProgress />
+                </Styles.ContainerCircularProgress>
+              ) : (
+                <>
+                  <h3>Games recomendados</h3>
+                  {gamesRecomendados.map((gameRecomendado) => (
+                    <Card game={gameRecomendado} />
+                  ))}
+                </>
               )}
-            </div>
-          </Styles.InformacoesGame>
-
-          {!showAvaliarGame ? (
-            <Styles.ContainerBotaoAvaliarGame>
-              <Button
-                variant="contained"
-                onClick={mostraAvaliarGame}
-                disabled={usuarioJaAvaliou}
-              >
-                Avaliar
-              </Button>
-            </Styles.ContainerBotaoAvaliarGame>
-          ) : (
-            <AvaliarGame
-              avaliacao={avaliacaoParaEditar}
-              handleSubmitAvaliacao={handleSubmitAvaliacao}
-              mostraAvaliarGame={mostraAvaliarGame}
-            />
-          )}
-
-          <Avaliacoes
-            usuarioLogado={usuario.id}
-            avaliacoes={avaliacoes}
-            isLoadingAvaliacoes={isLoadingAvaliacoes}
-            editarAvaliacao={editarAvaliacao}
-            deleteAvaliacao={deleteAvaliacao}
-          />
+            </Styles.GamesRecomendados>
+          </Styles.ContainerInfoAvaliacoesRecomendacoes>
         </div>
       )}
     </Styles.ContainerDetalhesGame>

@@ -19,26 +19,23 @@ export default function GoodBrowserGamesRoutes() {
       {!usuarioLogado ? (
         <>
           <Route path="/login" element={<Login />} />
-          <Route path="/cadastroMembros" element={<CadastroMembros />} />
+          <Route path="/membros/novoMembro" element={<CadastroMembros />} />
         </>
       ) : (
         <>
           <Route path="/" element={<Home />} />
 
-          <Route path="/cadastroGames" element={<ListagemGames />} />
-          <Route path="/cadastroGames/novoGame" element={<CadastroGame />} />
-          <Route
-            path="/cadastroGames/editarGame/:id"
-            element={<CadastroGame />}
-          />
+          <Route path="/games" element={<ListagemGames />} />
+          <Route path="/games/novoGame" element={<CadastroGame />} />
+          <Route path="/games/editarGame/:id" element={<CadastroGame />} />
 
-          <Route path="/cadastroCategorias" element={<ListagemCategorias />} />
+          <Route path="/categorias" element={<ListagemCategorias />} />
           <Route
-            path="/cadastroCategorias/novaCategoria"
+            path="/categorias/novaCategoria"
             element={<ListagemCategorias />}
           />
           <Route
-            path="/cadastroCategorias/editarCategoria/:id"
+            path="/categorias/editarCategoria/:id"
             element={<ListagemCategorias />}
           />
 

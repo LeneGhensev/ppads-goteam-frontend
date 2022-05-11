@@ -9,6 +9,7 @@ const Avaliacoes = (props) => {
   return (
     <Styles.ContainerAvaliacoes>
       <h2>Avaliações</h2>
+
       {props.isLoadingAvaliacoes ? (
         <Styles.ContainerCircularProgress>
           <CircularProgress />

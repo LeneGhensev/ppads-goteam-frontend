@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledContainerAvaliacoes = styled.div`
-  margin: 3rem 5rem;
+  margin: 3rem 1.5rem 3rem 5rem;
   border-radius: 8px;
 `;
 
