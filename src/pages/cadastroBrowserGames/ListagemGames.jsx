@@ -151,7 +151,7 @@ const ListagemGames = () => {
 
             {perfilAdmin && (
               <Styles.ContainerAddButton>
-                <Link to="/cadastroGames/novoGame">
+                <Link to="/games/novoGame">
                   <Button variant="contained">Novo Game</Button>
                 </Link>
               </Styles.ContainerAddButton>

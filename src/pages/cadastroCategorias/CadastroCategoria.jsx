@@ -44,7 +44,7 @@ const CadastroCategoria = (props) => {
     }
 
     handleCloseCadastroCategoria();
-    navigate("/cadastroCategorias");
+    navigate("/categorias");
   };
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const CadastroCategoria = (props) => {
           />
 
           <Styles.ContainerBotoesCadastro>
-            <Link to="/cadastroCategorias">
+            <Link to="/categorias">
               <Button variant="outlined" onClick={handleCloseCadastroCategoria}>
                 Cancelar
               </Button>

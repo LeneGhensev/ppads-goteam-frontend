@@ -72,7 +72,7 @@ const Game = (props) => {
 
         {perfilAdmin && (
           <Styles.ContainerButtons>
-            <Link to={`/cadastroGames/editarGame/${id}`}>
+            <Link to={`/games/editarGame/${id}`}>
               <Button startIcon={<ModeEditIcon />}>Editar</Button>
             </Link>
 

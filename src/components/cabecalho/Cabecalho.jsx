@@ -24,20 +24,17 @@ const Cabecalho = () => {
           </Link>
         </Styles.Logo>
 
-        {location.pathname !== "/cadastroMembros" && (
+        {location.pathname !== "/membros/novoMembro" && (
           <Styles.Nav>
             <Styles.Ul className="menu-itens">
               <Styles.Li>
-                <Link
-                  to="/cadastroGames"
-                  className="menu-item menu-item--entrar"
-                >
+                <Link to="/games" className="menu-item menu-item--entrar">
                   {perfilAdmin ? "Cadastro de Games" : "Games"}
                 </Link>
               </Styles.Li>
               {perfilAdmin && (
                 <Styles.Li>
-                  <Link to="/cadastroCategorias" className="menu-item">
+                  <Link to="/categorias" className="menu-item">
                     Cadastro de Categorias
                   </Link>
                 </Styles.Li>
@@ -47,7 +44,7 @@ const Cabecalho = () => {
         )}
       </Styles.ContainerLogoMenu>
 
-      {location.pathname !== "/cadastroMembros" && (
+      {location.pathname !== "/membros/novoMembro" && (
         <Styles.Avatar onClick={logout}>
           <Avatar
             alt={`Avatar do usuário ${usuario.username}`}

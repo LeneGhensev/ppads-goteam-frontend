@@ -61,7 +61,7 @@ const ListagemCategorias = () => {
         <div>
           {inicioListagemCategorias && (
             <Styles.ContainerBotaoNovaCategoria>
-              <Link to="/cadastroCategorias/novaCategoria">
+              <Link to="/categorias/novaCategoria">
                 <Button
                   variant="contained"
                   onClick={() => setInicioListagemCategorias(false)}

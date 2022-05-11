@@ -101,7 +101,7 @@ const Login = () => {
           </Styles.FormControl>
 
           <Styles.ContainerButtons>
-            <Link to="/cadastroMembros">
+            <Link to="/membros/novoMembro">
               <Styles.Button variant="outlined">Cadastrar</Styles.Button>
             </Link>
 
