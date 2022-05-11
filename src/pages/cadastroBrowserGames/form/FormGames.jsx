@@ -66,8 +66,6 @@ const FormGames = (props) => {
     formData.append("filetoupload", event.target.files[0]);
 
     try {
-      console.log("try", formData);
-
       const response = await axios.post("/file", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -89,8 +87,6 @@ const FormGames = (props) => {
 
       values = { ...values, tags };
     }
-
-    console.log(values);
 
     if (gameEditing) {
       try {

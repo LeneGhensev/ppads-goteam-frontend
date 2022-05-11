@@ -72,8 +72,6 @@ const CadastroMembros = (props) => {
     formData.append("filetoupload", event.target.files[0]);
 
     try {
-      console.log("try", formData);
-
       const response = await axios.post("/file", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -94,10 +92,7 @@ const CadastroMembros = (props) => {
       const data_de_nasc = new Date(dataNascimento);
 
       values = { ...values, data_de_nasc };
-      console.log(values);
     }
-
-    console.log(values);
 
     if (edicaoDeUsuario) {
       setIsLoading(true);
@@ -114,7 +109,6 @@ const CadastroMembros = (props) => {
       setIsLoading(true);
 
       try {
-        console.log(`post(/usuario, ${values}`);
         await axios.post("/usuario", values);
         setIsLoading(false);
       } catch (error) {

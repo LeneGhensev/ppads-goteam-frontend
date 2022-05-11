@@ -18,10 +18,6 @@ export const UserContextProvider = ({ children }) => {
   const [usuario, setUsuario] = useState({});
   const [usuarioLogado, setUsuarioLogado] = useState(false);
 
-  console.log(token);
-  console.log(usuario);
-  console.log(usuarioLogado);
-
   const getDadosDoUsuario = async () => {
     try {
       const response = await axios.get("/usuario");
