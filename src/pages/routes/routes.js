@@ -40,6 +40,11 @@ export default function GoodBrowserGamesRoutes() {
           />
 
           <Route path="/detalhesGame/:id" element={<DetalhesBrowserGame />} />
+
+          <Route
+            path="/membros/editarMembro/:id"
+            element={<CadastroMembros />}
+          />
         </>
       )}
 

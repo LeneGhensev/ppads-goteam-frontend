@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
 import axios from "../../api/api";
@@ -8,29 +8,29 @@ import TextField from "../../components/textfield/TextField";
 import useValidateForm from "../../hooks/useValidateForm";
 
 import Styles from "./CadastroMembros.styles";
+import { useUseContext } from "../../contexts/UserContext";
 
 const CadastroMembros = (props) => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { usuario } = useUseContext();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const id = props?.usuario?.id;
-  const title = props?.usuario ? "Editar cadastro de Membro" : "Novo Membro";
-  const textButton = props?.usuario
-    ? "Salvar alterações"
-    : "Gravar novo Membro";
-  const edicaoDeUsuario = props?.usuario ? true : false;
+  const edicaoMembro = id ? true : false;
+  const title = edicaoMembro ? "Editar cadastro de Membro" : "Novo Membro";
+  const textButton = edicaoMembro ? "Salvar alterações" : "Gravar novo Membro";
 
   const validateForm = useValidateForm({
     initialValues: {
-      nome: props?.usuario?.nome,
-      avatar: props?.usuario?.avatar,
-      username: props?.usuario?.username,
-      email: props?.usuario?.email,
-      data_de_nasc: props?.usuario?.data_de_nasc,
-      senha: props?.usuario?.senha,
-      estado: props?.usuario?.estado,
-      pais: props?.usuario?.pais,
+      nome: usuario?.nome,
+      avatar: usuario?.avatar,
+      username: usuario?.username,
+      email: usuario?.email,
+      data_de_nasc: usuario?.data_de_nasc,
+      senha: usuario?.senha,
+      estado: usuario?.estado,
+      pais: usuario?.pais,
     },
     validate: function (values) {
       const errors = {};
@@ -94,11 +94,11 @@ const CadastroMembros = (props) => {
       values = { ...values, data_de_nasc };
     }
 
-    if (edicaoDeUsuario) {
+    if (edicaoMembro) {
       setIsLoading(true);
 
       try {
-        console.log(`put(/usuario/id/${id}, ${values}`);
+        console.log(`put(/usuario/id/${usuario.id}, ${values}`);
         // await axios.put(`/usuario/id/${id}`, values);
         setIsLoading(false);
       } catch (error) {

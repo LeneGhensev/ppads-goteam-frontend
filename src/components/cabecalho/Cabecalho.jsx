@@ -45,13 +45,18 @@ const Cabecalho = () => {
       </Styles.ContainerLogoMenu>
 
       {location.pathname !== "/membros/novoMembro" && (
-        <Styles.Avatar onClick={logout}>
-          <Avatar
-            alt={`Avatar do usuário ${usuario.username}`}
-            src={usuario.avatar || avatarDefault}
-            sx={{ width: 64, height: 64 }}
-          />
-        </Styles.Avatar>
+        <>
+          <Link to={`/membros/editarMembro/${usuario.id}`}>
+            <p>Editar cadastro</p>
+          </Link>
+          <Styles.Avatar onClick={logout}>
+            <Avatar
+              alt={`Avatar do usuário ${usuario.username}`}
+              src={usuario.avatar || avatarDefault}
+              sx={{ width: 64, height: 64 }}
+            />
+          </Styles.Avatar>
+        </>
       )}
     </Styles.Header>
   );
