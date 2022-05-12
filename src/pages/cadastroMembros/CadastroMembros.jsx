@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
@@ -27,7 +28,9 @@ const CadastroMembros = (props) => {
       avatar: usuario?.avatar,
       username: usuario?.username,
       email: usuario?.email,
-      data_de_nasc: usuario?.data_de_nasc,
+      data_de_nasc: usuario?.data_de_nasc
+        ? moment(usuario?.data_de_nasc).format("DD/MM/YYYY")
+        : "",
       senha: usuario?.senha,
       estado: usuario?.estado,
       pais: usuario?.pais,
