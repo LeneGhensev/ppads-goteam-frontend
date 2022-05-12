@@ -51,16 +51,22 @@ const CadastroMembros = (props) => {
         errors.data_de_nasc = "Campo obrigatório";
       }
 
-      if (values.senha === "") {
-        errors.senha = "Campo obrigatório";
-      }
-
       if (values.estado === "") {
         errors.estado = "Campo obrigatório";
       }
 
       if (values.pais === "") {
         errors.pais = "Campo obrigatório";
+      }
+
+      if (values.senha === "") {
+        errors.senha = "Campo obrigatório";
+      }
+      if (values.senha?.length < 8) {
+        errors.senha = "Senha deve possuir no minimo 8 caracteres";
+      }
+      if (values.senha?.length > 128) {
+        errors.senha = "Senha deve possuir no maximo 128 caracteres";
       }
 
       return errors;
@@ -98,8 +104,7 @@ const CadastroMembros = (props) => {
       setIsLoading(true);
 
       try {
-        console.log(`put(/usuario/id/${usuario.id}, ${values}`);
-        // await axios.put(`/usuario/id/${id}`, values);
+        await axios.put(`/usuario/id/${id}`, values);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -191,7 +196,7 @@ const CadastroMembros = (props) => {
                 type="text"
                 id="data_de_nasc"
                 name="data_de_nasc"
-                value={validateForm.values?.data_de_nasc}
+                value={validateForm.values?.data_de_nasc || ""}
                 onChange={validateForm.handleChange}
                 onBlur={validateForm.handleBlur}
                 helperText={
