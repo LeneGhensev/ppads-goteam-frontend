@@ -1,17 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
-import Avatar from "@mui/material/Avatar";
 
 import logo from "../../../src/assets/images/logo.png";
-import avatarDefault from "../../assets/images/avatarDefault.png";
 import { useUseContext } from "../../contexts/UserContext";
 
 import Styles from "./Cabecalho.styles";
+import Drawer from "../userMenu/Drawer";
 
 const Cabecalho = () => {
   const location = useLocation();
-  const { usuario, logout } = useUseContext();
+  const { usuario } = useUseContext();
   const perfilAdmin = usuario.admin === true ? true : false;
 
   return (
@@ -45,12 +44,8 @@ const Cabecalho = () => {
       </Styles.ContainerLogoMenu>
 
       {location.pathname !== "/membros/novoMembro" && (
-        <Styles.Avatar onClick={logout}>
-          <Avatar
-            alt={`Avatar do usuário ${usuario.username}`}
-            src={usuario.avatar || avatarDefault}
-            sx={{ width: 64, height: 64 }}
-          />
+        <Styles.Avatar>
+          <Drawer />
         </Styles.Avatar>
       )}
     </Styles.Header>
