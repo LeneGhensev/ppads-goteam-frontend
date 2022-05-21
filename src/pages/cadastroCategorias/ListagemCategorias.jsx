@@ -10,6 +10,7 @@ import Categoria from "../../components/categoria/Categoria";
 import PageTitle from "../../components/pageTitle/PageTitle";
 
 import Styles from "./ListagemCategorias.styles";
+import Toast from "../../components/toast/Toast";
 
 const ListagemCategorias = () => {
   const [listCategorias, setListCategorias] = useState();
@@ -18,12 +19,24 @@ const ListagemCategorias = () => {
     true
   );
 
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastVariant, setToastVariant] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
+  const hideToast = () => setShowToast(false);
+
   const getAllCategorias = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get("/categorias");
       setListCategorias(response.data);
       setIsLoading(false);
+
+      if (response.status !== 200) {
+        setToastMessage("Ops! Algo saiu errado.");
+        setToastVariant("error");
+        setShowToast(true);
+      }
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -32,8 +45,18 @@ const ListagemCategorias = () => {
 
   const deleteCategoria = async (id) => {
     try {
-      await axios.delete(`/categoria/id/${id}`);
+      const response = await axios.delete(`/categoria/id/${id}`);
       getAllCategorias();
+
+      if (response.status === 202) {
+        setToastMessage("Categoria excluída com sucesso.");
+        setToastVariant("success");
+        setShowToast(true);
+      } else {
+        setToastMessage("Ops! Algo saiu errado.");
+        setToastVariant("error");
+        setShowToast(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -95,6 +118,13 @@ const ListagemCategorias = () => {
           )}
         </div>
       )}
+
+      <Toast
+        showToast={showToast}
+        variant={toastVariant}
+        mensagem={toastMessage}
+        onClose={hideToast}
+      />
     </Styles.ContainerListCategorias>
   );
 };

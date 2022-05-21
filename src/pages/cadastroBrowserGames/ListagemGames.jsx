@@ -8,9 +8,10 @@ import PageTitle from "../../components/pageTitle/PageTitle";
 import Game from "../../components/game/Game";
 import Select from "../../components/select/Select";
 import TextField from "../../components/textfield/TextField";
+import Toast from "../../components/toast/Toast";
+import { useUseContext } from "../../contexts/UserContext";
 
 import Styles from "./ListagemGames.styles";
-import { useUseContext } from "../../contexts/UserContext";
 
 const ListagemGames = () => {
   const { usuario } = useUseContext();
@@ -21,8 +22,14 @@ const ListagemGames = () => {
   const [filtros, setFiltros] = useState(null);
   const [gamesFiltrados, setGamesFiltrados] = useState(allGames);
 
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastVariant, setToastVariant] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+
   const games = !!filtros ? gamesFiltrados : allGames;
   const perfilAdmin = usuario.admin === true ? true : false;
+
+  const hideToast = () => setShowToast(false);
 
   const getAllGames = async () => {
     setIsLoading(true);
@@ -31,6 +38,12 @@ const ListagemGames = () => {
       const response = await axios.get("/games");
       setAllGames(response.data);
       setIsLoading(false);
+
+      if (response.status !== 200) {
+        setToastMessage("Ops! Algo saiu errado.");
+        setToastVariant("error");
+        setShowToast(true);
+      }
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -39,8 +52,18 @@ const ListagemGames = () => {
 
   const deleteGame = async (id) => {
     try {
-      await axios.delete(`/game/id/${id}`);
+      const response = await axios.delete(`/game/id/${id}`);
       getAllGames();
+
+      if (response.status === 202) {
+        setToastMessage("Game excluído com sucesso.");
+        setToastVariant("success");
+        setShowToast(true);
+      } else {
+        setToastMessage("Ops! Algo saiu errado.");
+        setToastVariant("error");
+        setShowToast(true);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -169,6 +192,13 @@ const ListagemGames = () => {
           )}
         </div>
       )}
+
+      <Toast
+        showToast={showToast}
+        variant={toastVariant}
+        mensagem={toastMessage}
+        onClose={hideToast}
+      />
     </Styles.ContainerListGames>
   );
 };
