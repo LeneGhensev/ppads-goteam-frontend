@@ -2,8 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import axios from "../../api/api";
-
 import { useUseContext } from "../../contexts/UserContext";
+import { useToastContext } from "../../contexts/ToastContext";
+
 import useValidateForm from "../../hooks/useValidateForm";
 import PageTitle from "../../components/pageTitle/PageTitle";
 import TextField from "../../components/textfield/TextField";
@@ -12,8 +13,10 @@ import logo from "../../../src/assets/images/logo.png";
 import Styles from "./Login.styles";
 
 const Login = () => {
-  const { setToken } = useUseContext();
   const navigate = useNavigate();
+
+  const { setToken } = useUseContext();
+  const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const validateForm = useValidateForm({
     initialValues: {
@@ -39,16 +42,19 @@ const Login = () => {
     let values = { ...validateForm.values };
 
     try {
-      const resp = await axios.post("/login", values);
+      const response = await axios.post("/login", values);
 
-      if (resp.data.token) {
-        setToken(resp.data.token);
-        axios.defaults.headers.common["x-access-token"] = resp.data.token;
+      if (response.data.token) {
+        setToken(response.data.token);
+        axios.defaults.headers.common["x-access-token"] = response.data.token;
 
         return navigate("/");
       }
     } catch (error) {
       console.log(error);
+      setToastMessage("Usuário e/ou Senha incorretos.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
@@ -102,7 +108,7 @@ const Login = () => {
 
           <Styles.ContainerButtons>
             <Link to="/membros/novoMembro">
-              <Styles.Button variant="outlined">Cadastrar</Styles.Button>
+              <Styles.Button variant="outlined">Registrar</Styles.Button>
             </Link>
 
             <Styles.Button type="submit" variant="contained">

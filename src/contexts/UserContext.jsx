@@ -5,9 +5,9 @@ import useStorage from "../utils/useStorage";
 
 const UserContext = createContext({
   token: null,
-  setToken: () => {},
   usuario: {},
   usuarioLogado: null,
+  setToken: () => {},
   logout: () => {},
 });
 

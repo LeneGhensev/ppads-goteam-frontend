@@ -4,17 +4,20 @@ import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Button, Rating } from "@mui/material";
 
 import axios from "../../api/api";
+import { useUseContext } from "../../contexts/UserContext";
+import { useToastContext } from "../../contexts/ToastContext";
+
 import PageTitle from "../../components/pageTitle/PageTitle";
 import Avaliacoes from "../../components/avaliacoes/Avaliacoes";
 import AvaliarGame from "../../components/avaliarGame/AvaliarGame";
 import Card from "../../components/card/Card";
-import { useUseContext } from "../../contexts/UserContext";
 
 import Styles from "./DetalhesBrowserGame.styles";
 
 const DetalhesBrowserGame = () => {
   const { id: idGame } = useParams();
   const { usuario } = useUseContext();
+  const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [game, setGame] = useState();
   const [isLoadingGame, setIsLoadingGame] = useState(false);
@@ -50,11 +53,23 @@ const DetalhesBrowserGame = () => {
 
     try {
       const response = await axios.get(`/game/recomenda/id/${idGame}`);
+
+      if (response.status !== 200) {
+        setToastMessage(
+          "Ops! Algo saiu errado para buscar os games recomendados."
+        );
+        setToastVariant("error");
+        setShowToast(true);
+      }
+
       setGamesRecomendados(response.data);
       setIsLoadingGamesRecomendados(false);
     } catch (error) {
       setIsLoadingGamesRecomendados(false);
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
@@ -63,23 +78,49 @@ const DetalhesBrowserGame = () => {
 
     try {
       const response = await axios.get(`/avaliacoes/game/id/${idGame}`);
+
+      if (response.status !== 200) {
+        setToastMessage(
+          "Ops! Algo saiu errado para buscar as avaliações do game."
+        );
+        setToastVariant("error");
+        setShowToast(true);
+      }
+
       setAvaliacoes(response.data);
       setIsLoadingAvaliacoes(false);
     } catch (error) {
       setIsLoadingAvaliacoes(false);
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
   const deleteAvaliacao = async (id) => {
-    mostraAvaliarGame();
+    getGame();
 
     try {
-      await axios.delete(`/avaliacao/id/${id}`);
-      getAvaliacoesDoGame();
+      const response = await axios.delete(`/avaliacao/id/${id}`);
+
+      if (response.status === 202) {
+        setToastMessage("Avaliação excluída com sucesso.");
+        setToastVariant("success");
+        setShowToast(true);
+      } else {
+        setToastMessage("Ops! Algo saiu errado.");
+        setToastVariant("error");
+        setShowToast(true);
+      }
     } catch (error) {
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
+
+    getAvaliacoesDoGame();
   };
 
   const getGame = async () => {
@@ -109,13 +150,36 @@ const DetalhesBrowserGame = () => {
 
     if (avaliacaoParaEditar) {
       try {
-        await axios.put(`/avaliacao/id/${idAvaliacao}`, values);
+        const response = await axios.put(
+          `/avaliacao/id/${idAvaliacao}`,
+          values
+        );
+
+        if (response.status === 202) {
+          setToastMessage("Avaliação alterada com sucesso.");
+          setToastVariant("success");
+          setShowToast(true);
+        } else {
+          setToastMessage("Ops! Algo saiu errado.");
+          setToastVariant("error");
+          setShowToast(true);
+        }
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
-        await axios.post("/avaliacao", values);
+        const response = await axios.post("/avaliacao", values);
+
+        if (response.status === 201) {
+          setToastMessage("Avaliação cadastrada com sucesso.");
+          setToastVariant("success");
+          setShowToast(true);
+        } else {
+          setToastMessage("Ops! Algo saiu errado.");
+          setToastVariant("error");
+          setShowToast(true);
+        }
       } catch (error) {
         console.log(error);
       }

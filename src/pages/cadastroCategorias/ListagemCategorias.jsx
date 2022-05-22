@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Button } from "@mui/material";
 
 import axios from "../../api/api";
+import { useToastContext } from "../../contexts/ToastContext";
+
 import CadastroCategoria from "./CadastroCategoria";
 import Categoria from "../../components/categoria/Categoria";
 import PageTitle from "../../components/pageTitle/PageTitle";
 
 import Styles from "./ListagemCategorias.styles";
-import Toast from "../../components/toast/Toast";
 
 const ListagemCategorias = () => {
+  const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
+
   const [listCategorias, setListCategorias] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [inicioListagemCategorias, setInicioListagemCategorias] = useState(
     true
   );
-
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastVariant, setToastVariant] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-
-  const hideToast = () => setShowToast(false);
 
   const getAllCategorias = async () => {
     setIsLoading(true);
@@ -40,6 +36,9 @@ const ListagemCategorias = () => {
     } catch (error) {
       setIsLoading(false);
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
@@ -59,6 +58,9 @@ const ListagemCategorias = () => {
       }
     } catch (error) {
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
@@ -118,13 +120,6 @@ const ListagemCategorias = () => {
           )}
         </div>
       )}
-
-      <Toast
-        showToast={showToast}
-        variant={toastVariant}
-        mensagem={toastMessage}
-        onClose={hideToast}
-      />
     </Styles.ContainerListCategorias>
   );
 };

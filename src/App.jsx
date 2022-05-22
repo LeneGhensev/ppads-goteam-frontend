@@ -3,6 +3,8 @@ import { useLocation } from "react-router";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { UserContextProvider } from "./contexts/UserContext";
+import { ToastContextProvider } from "./contexts/ToastContext";
+
 import Routes from "./pages/routes/routes";
 import Cabecalho from "./components/cabecalho/Cabecalho";
 
@@ -12,13 +14,15 @@ function App() {
   const location = useLocation();
 
   return (
-    <UserContextProvider>
-      <ThemeProvider theme={theme}>
-        {location.pathname !== "/login" && <Cabecalho />}
+    <ThemeProvider theme={theme}>
+      <ToastContextProvider>
+        <UserContextProvider>
+          {location.pathname !== "/login" && <Cabecalho />}
 
-        <Routes />
-      </ThemeProvider>
-    </UserContextProvider>
+          <Routes />
+        </UserContextProvider>
+      </ToastContextProvider>
+    </ThemeProvider>
   );
 }
 

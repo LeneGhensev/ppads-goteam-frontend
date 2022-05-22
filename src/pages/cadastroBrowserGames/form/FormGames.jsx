@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../../api/api";
 import { Link, useNavigate } from "react-router-dom";
 
-import useValidateForm from "../../../hooks/useValidateForm";
+import axios from "../../../api/api";
+import { useToastContext } from "../../../contexts/ToastContext";
 
-import Styles from "./FormGames.styles";
+import useValidateForm from "../../../hooks/useValidateForm";
 import PageTitle from "../../../components/pageTitle/PageTitle";
 import Select from "../../../components/select/Select";
 import TextField from "../../../components/textfield/TextField";
 
+import Styles from "./FormGames.styles";
+
 const FormGames = (props) => {
   const navigate = useNavigate();
+
+  const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [categories, setCategories] = useState();
 
@@ -90,28 +94,66 @@ const FormGames = (props) => {
 
     if (gameEditing) {
       try {
-        await axios.put(`/game/id/${id}`, values);
+        const response = await axios.put(`/game/id/${id}`, values);
+
+        if (response.status === 202) {
+          setToastMessage("Cadastro alterado com sucesso.");
+          setToastVariant("success");
+          setShowToast(true);
+        } else {
+          setToastMessage("Ops! Algo saiu errado.");
+          setToastVariant("error");
+          setShowToast(true);
+        }
       } catch (error) {
         console.log(error);
+        setToastMessage("Algo saiu errado com o serviço.");
+        setToastVariant("error");
+        setShowToast(true);
       }
     } else {
       try {
-        await axios.post("/game", values);
+        const response = await axios.post("/game", values);
+
+        if (response.status === 201) {
+          setToastMessage("Cadastro realizado com sucesso.");
+          setToastVariant("success");
+          setShowToast(true);
+        } else {
+          setToastMessage("Ops! Algo saiu errado.");
+          setToastVariant("error");
+          setShowToast(true);
+        }
       } catch (error) {
         console.log(error);
+        setToastMessage("Algo saiu errado com o serviço.");
+        setToastVariant("error");
+        setShowToast(true);
       }
     }
 
-    navigate("/games");
+    await navigate("/games");
   };
 
   useEffect(() => {
     const getCategories = async () => {
       try {
         const response = await axios.get("/categorias");
+
+        if (response.status !== 200) {
+          setToastMessage(
+            "Ops! Algo saiu errado para buscar as categorias disponíveis."
+          );
+          setToastVariant("error");
+          setShowToast(true);
+        }
+
         setCategories(response.data);
       } catch (error) {
         console.log(error);
+        setToastMessage("Algo saiu errado com o serviço.");
+        setToastVariant("error");
+        setShowToast(true);
       }
     };
 

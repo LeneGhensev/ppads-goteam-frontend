@@ -4,17 +4,20 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
 import axios from "../../api/api";
+import { useToastContext } from "../../contexts/ToastContext";
+import { useUseContext } from "../../contexts/UserContext";
+
 import PageTitle from "../../components/pageTitle/PageTitle";
 import TextField from "../../components/textfield/TextField";
 import useValidateForm from "../../hooks/useValidateForm";
 
 import Styles from "./CadastroMembros.styles";
-import { useUseContext } from "../../contexts/UserContext";
 
 const CadastroMembros = (props) => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { usuario } = useUseContext();
+  const { usuario, logout } = useUseContext();
+  const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -90,6 +93,9 @@ const CadastroMembros = (props) => {
       validateForm.values.avatar = response.data.url;
     } catch (error) {
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
@@ -107,24 +113,51 @@ const CadastroMembros = (props) => {
       setIsLoading(true);
 
       try {
-        await axios.put(`/usuario/id/${id}`, values);
+        const response = await axios.put(`/usuario/id/${id}`, values);
         setIsLoading(false);
+
+        if (response.status === 202) {
+          setToastMessage("Cadastro alterado com sucesso.");
+          setToastVariant("success");
+          setShowToast(true);
+        } else {
+          setToastMessage("Ops! Algo saiu errado.");
+          setToastVariant("error");
+          setShowToast(true);
+        }
       } catch (error) {
         setIsLoading(false);
         console.log(error);
+        setToastMessage("Algo saiu errado com o serviço.");
+        setToastVariant("error");
+        setShowToast(true);
       }
     } else {
       setIsLoading(true);
 
       try {
-        await axios.post("/usuario", values);
+        const response = await axios.post("/usuario", values);
         setIsLoading(false);
+
+        if (response.status === 201) {
+          setToastMessage("Cadastro realizado com sucesso.");
+          setToastVariant("success");
+          setShowToast(true);
+        } else {
+          setToastMessage("Preencha corretamente os campos e tente novamente.");
+          setToastVariant("warning");
+          setShowToast(true);
+        }
       } catch (error) {
         setIsLoading(false);
         console.log(error);
+        setToastMessage("Algo saiu errado com o serviço.");
+        setToastVariant("error");
+        setShowToast(true);
       }
     }
 
+    logout();
     navigate("/login");
   };
 

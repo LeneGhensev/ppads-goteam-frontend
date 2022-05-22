@@ -4,17 +4,19 @@ import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 import axios from "../../api/api";
+import { useUseContext } from "../../contexts/UserContext";
+import { useToastContext } from "../../contexts/ToastContext";
+
 import PageTitle from "../../components/pageTitle/PageTitle";
 import Game from "../../components/game/Game";
 import Select from "../../components/select/Select";
 import TextField from "../../components/textfield/TextField";
-import Toast from "../../components/toast/Toast";
-import { useUseContext } from "../../contexts/UserContext";
 
 import Styles from "./ListagemGames.styles";
 
 const ListagemGames = () => {
   const { usuario } = useUseContext();
+  const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -22,14 +24,8 @@ const ListagemGames = () => {
   const [filtros, setFiltros] = useState(null);
   const [gamesFiltrados, setGamesFiltrados] = useState(allGames);
 
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastVariant, setToastVariant] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-
   const games = !!filtros ? gamesFiltrados : allGames;
   const perfilAdmin = usuario.admin === true ? true : false;
-
-  const hideToast = () => setShowToast(false);
 
   const getAllGames = async () => {
     setIsLoading(true);
@@ -47,13 +43,15 @@ const ListagemGames = () => {
     } catch (error) {
       setIsLoading(false);
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
   const deleteGame = async (id) => {
     try {
       const response = await axios.delete(`/game/id/${id}`);
-      getAllGames();
 
       if (response.status === 202) {
         setToastMessage("Game excluído com sucesso.");
@@ -64,17 +62,35 @@ const ListagemGames = () => {
         setToastVariant("error");
         setShowToast(true);
       }
+
+      setFiltros();
+      getAllGames();
     } catch (error) {
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
   const getCategories = async () => {
     try {
       const response = await axios.get("/categorias");
+
+      if (response.status !== 200) {
+        setToastMessage(
+          "Ops! Algo saiu errado para buscar as categorias disponíveis."
+        );
+        setToastVariant("error");
+        setShowToast(true);
+      }
+
       setCategories(response.data);
     } catch (error) {
       console.log(error);
+      setToastMessage("Algo saiu errado com o serviço.");
+      setToastVariant("error");
+      setShowToast(true);
     }
   };
 
@@ -192,13 +208,6 @@ const ListagemGames = () => {
           )}
         </div>
       )}
-
-      <Toast
-        showToast={showToast}
-        variant={toastVariant}
-        mensagem={toastMessage}
-        onClose={hideToast}
-      />
     </Styles.ContainerListGames>
   );
 };
