@@ -30,10 +30,23 @@ const StyledContainerButtons = styled.div`
 const StyledContainerImagemIlustrativa = styled.div`
   padding: 1rem 0 0;
 
+  img {
+    max-width: 250px;
+    max-height: 250px;
+    border-radius: 8px;
+  }
+
   p {
     font-size: 14px;
     margin: 0.5rem 0;
   }
+`;
+
+const StyledCircularProgressImagemIlustrativa = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledFormControl = styled(FormControl)`
@@ -66,4 +79,5 @@ export default {
   ContainerButtons: StyledContainerButtons,
   Button: StyledButton,
   ContainerImagemIlustrativa: StyledContainerImagemIlustrativa,
+  CircularProgressImagemIlustrativa: StyledCircularProgressImagemIlustrativa,
 };

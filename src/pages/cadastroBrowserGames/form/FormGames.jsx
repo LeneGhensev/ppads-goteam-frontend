@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 import axios from "../../../api/api";
 import { useToastContext } from "../../../contexts/ToastContext";
@@ -17,6 +18,9 @@ const FormGames = (props) => {
   const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [categories, setCategories] = useState();
+  const [isLoadingImagemIlustrativa, setIsLoadingImagemIlustrativa] = useState(
+    false
+  );
 
   const id = props?.game?.id;
   const title = props?.game ? "Editar Game" : "Novo Game";
@@ -66,6 +70,8 @@ const FormGames = (props) => {
   });
 
   const uploadImagemIlustrativa = async (event) => {
+    setIsLoadingImagemIlustrativa(true);
+
     const formData = new FormData();
     formData.append("filetoupload", event.target.files[0]);
 
@@ -80,6 +86,8 @@ const FormGames = (props) => {
     } catch (error) {
       console.log(error);
     }
+
+    setIsLoadingImagemIlustrativa(false);
   };
 
   const handleSubmit = async () => {
@@ -187,7 +195,11 @@ const FormGames = (props) => {
             />
           </Styles.FormControl>
 
-          {validateForm.values?.imagem_ilustrativa ? (
+          {isLoadingImagemIlustrativa ? (
+            <Styles.CircularProgressImagemIlustrativa>
+              <CircularProgress />
+            </Styles.CircularProgressImagemIlustrativa>
+          ) : validateForm.values?.imagem_ilustrativa ? (
             <Styles.ContainerImagemIlustrativa>
               <img
                 src={validateForm.values?.imagem_ilustrativa}

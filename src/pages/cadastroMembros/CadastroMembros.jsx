@@ -20,10 +20,11 @@ const CadastroMembros = (props) => {
   const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingAvatar, setIsLoadingAvatar] = useState(false);
 
   const edicaoMembro = id ? true : false;
   const title = edicaoMembro ? "Editar cadastro de Membro" : "Novo Membro";
-  const textButton = edicaoMembro ? "Salvar alterações" : "Gravar novo Membro";
+  const textButton = edicaoMembro ? "Salvar alterações" : "Cadastrar";
 
   const validateForm = useValidateForm({
     initialValues: {
@@ -80,6 +81,8 @@ const CadastroMembros = (props) => {
   });
 
   const uploadAvatar = async (event) => {
+    setIsLoadingAvatar(true);
+
     const formData = new FormData();
     formData.append("filetoupload", event.target.files[0]);
 
@@ -97,6 +100,8 @@ const CadastroMembros = (props) => {
       setToastVariant("error");
       setShowToast(true);
     }
+
+    setIsLoadingAvatar(false);
   };
 
   const handleSubmit = async () => {
@@ -197,7 +202,11 @@ const CadastroMembros = (props) => {
               />
             </Styles.FormControl>
 
-            {validateForm.values?.avatar ? (
+            {isLoadingAvatar ? (
+              <Styles.ContainerCircularProgressAvatar>
+                <CircularProgress />
+              </Styles.ContainerCircularProgressAvatar>
+            ) : validateForm.values?.avatar ? (
               <Styles.Avatar>
                 <img
                   src={validateForm.values?.avatar}

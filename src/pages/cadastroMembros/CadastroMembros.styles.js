@@ -19,6 +19,13 @@ const StyledContainerCircularProgress = styled.div`
   align-items: center;
 `;
 
+const StyledContainerCircularProgressAvatar = styled.div`
+  display: flex;
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StyledContainerForm = styled.div`
   display: flex;
   justify-content: center;
@@ -44,6 +51,11 @@ const StyledInputLabel = styled(InputLabel)`
 
 const StyledContainerAvatar = styled.div`
   padding: 1rem 0 0;
+
+  img {
+    max-width: 250px;
+    max-height: 250px;
+  }
 
   p {
     font-size: 14px;
@@ -74,6 +86,7 @@ const StyledButton = styled(Button)`
 export default {
   ContainerCadastroMembros: StyledContainerCadastroMembros,
   ContainerCircularProgress: StyledContainerCircularProgress,
+  ContainerCircularProgressAvatar: StyledContainerCircularProgressAvatar,
   ContainerForm: StyledContainerForm,
   Form: StyledForm,
   FormControl: StyledFormControl,

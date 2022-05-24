@@ -19,7 +19,7 @@ const Toast = ({ showToast, variant = "success", mensagem, onClose }) => {
         <Styles.Alert
           variant="filled"
           severity={variant}
-          sx={{ width: "40vw" }}
+          sx={{ minWidth: "30vw", maxWidth: "40vw" }}
           action={
             <IconButton
               aria-label="close"

@@ -4,8 +4,10 @@ import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
-import Styles from "./Game.styles";
 import { useUseContext } from "../../contexts/UserContext";
+
+import logo from "../../assets/images/logo.png";
+import Styles from "./Game.styles";
 
 const Game = (props) => {
   const {
@@ -27,7 +29,10 @@ const Game = (props) => {
       <Styles.Card>
         <Link to={`/detalhesGame/${id}`}>
           <Styles.ImagemIlustrativa>
-            <img src={imagem_ilustrativa} alt="Imagem ilustrativa do Game" />
+            <img
+              src={imagem_ilustrativa ? imagem_ilustrativa : logo}
+              alt="Imagem ilustrativa do Game"
+            />
           </Styles.ImagemIlustrativa>
 
           <Styles.ContainerBrowserGameInfo>
