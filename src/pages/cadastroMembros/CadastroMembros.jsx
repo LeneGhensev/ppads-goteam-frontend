@@ -5,7 +5,7 @@ import { CircularProgress } from "@mui/material";
 
 import axios from "../../api/api";
 import { useToastContext } from "../../contexts/ToastContext";
-import { useUseContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 import PageTitle from "../../components/pageTitle/PageTitle";
 import TextField from "../../components/textfield/TextField";
@@ -16,7 +16,7 @@ import Styles from "./CadastroMembros.styles";
 const CadastroMembros = (props) => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { usuario, logout } = useUseContext();
+  const { usuario, logout } = useUserContext();
   const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [isLoading, setIsLoading] = useState(false);

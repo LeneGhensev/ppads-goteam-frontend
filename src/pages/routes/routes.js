@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import { useUseContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 import Login from "../login/Login";
 import CadastroMembros from "../cadastroMembros/CadastroMembros";
@@ -12,7 +12,7 @@ import ListagemCategorias from "../cadastroCategorias/ListagemCategorias";
 import DetalhesBrowserGame from "../detalhesBrowserGame/DetalhesBrowserGame";
 
 export default function GoodBrowserGamesRoutes() {
-  const { usuarioLogado } = useUseContext();
+  const { usuarioLogado } = useUserContext();
 
   return (
     <Routes>

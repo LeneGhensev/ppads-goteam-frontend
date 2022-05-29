@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 
 import axios from "../../api/api";
-import { useUseContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 import { useToastContext } from "../../contexts/ToastContext";
 
 import PageTitle from "../../components/pageTitle/PageTitle";
@@ -15,7 +15,7 @@ import TextField from "../../components/textfield/TextField";
 import Styles from "./ListagemGames.styles";
 
 const ListagemGames = () => {
-  const { usuario } = useUseContext();
+  const { usuario } = useUserContext();
   const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [isLoading, setIsLoading] = useState(false);

@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 
 import logo from "../../../src/assets/images/logo.png";
-import { useUseContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 import Styles from "./Cabecalho.styles";
 import Drawer from "../userMenu/Drawer";
 
 const Cabecalho = () => {
   const location = useLocation();
-  const { usuario } = useUseContext();
+  const { usuario } = useUserContext();
   const perfilAdmin = usuario.admin === true ? true : false;
 
   return (

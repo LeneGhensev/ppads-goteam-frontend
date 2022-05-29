@@ -11,7 +11,7 @@ const UserContext = createContext({
   logout: () => {},
 });
 
-export const useUseContext = () => useContext(UserContext);
+export const useUserContext = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
   const [token, setToken, removeUsuario] = useStorage("token");

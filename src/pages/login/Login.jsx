@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import axios from "../../api/api";
-import { useUseContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 import { useToastContext } from "../../contexts/ToastContext";
 
 import useValidateForm from "../../hooks/useValidateForm";
@@ -15,7 +15,7 @@ import Styles from "./Login.styles";
 const Login = () => {
   const navigate = useNavigate();
 
-  const { setToken } = useUseContext();
+  const { setToken } = useUserContext();
   const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const validateForm = useValidateForm({

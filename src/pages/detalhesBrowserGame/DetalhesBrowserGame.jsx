@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress/CircularProgress";
 import { Button, Rating } from "@mui/material";
 
 import axios from "../../api/api";
-import { useUseContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 import { useToastContext } from "../../contexts/ToastContext";
 
 import PageTitle from "../../components/pageTitle/PageTitle";
@@ -16,7 +16,7 @@ import Styles from "./DetalhesBrowserGame.styles";
 
 const DetalhesBrowserGame = () => {
   const { id: idGame } = useParams();
-  const { usuario } = useUseContext();
+  const { usuario } = useUserContext();
   const { setShowToast, setToastMessage, setToastVariant } = useToastContext();
 
   const [game, setGame] = useState();

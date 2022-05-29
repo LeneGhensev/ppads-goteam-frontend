@@ -14,11 +14,11 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import Avatar from "@mui/material/Avatar";
 
 import avatarDefault from "../../assets/images/avatarDefault.png";
-import { useUseContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 const Drawer = () => {
   const [state, setState] = React.useState(false);
-  const { usuario, logout } = useUseContext();
+  const { usuario, logout } = useUserContext();
   const navigate = useNavigate();
 
   const toggleDrawer = (open) => (event) => {

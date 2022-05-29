@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 
-import { useUseContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../contexts/UserContext";
 
 import logo from "../../assets/images/logo.png";
 import Styles from "./Game.styles";
@@ -21,7 +21,7 @@ const Game = (props) => {
     categoria,
   } = props.game;
 
-  const { usuario } = useUseContext();
+  const { usuario } = useUserContext();
   const perfilAdmin = usuario.admin === true ? true : false;
 
   return (
