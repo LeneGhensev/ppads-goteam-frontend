@@ -10,7 +10,7 @@ Este projeto foi criado com [Create React App](https://github.com/facebook/creat
 
 ## Scripts disponíveis
 
-### `yarn dev`
+### `yarn start`
 
 Inicia o projeto localmente no modo de desenvolvimento.\
 Abra [http://localhost:3000](http://localhost:3000) para visualizar no browser.
