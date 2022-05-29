@@ -1,6 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  // baseURL: "https://ppads-goteam-backend.herokuapp.com/",
-  baseURL: "http://localhost:3001/",
+  baseURL: "http://alien-bebop-191120.rj.r.appspot.com/",
 });
